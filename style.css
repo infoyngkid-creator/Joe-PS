@@ -1,0 +1,665 @@
+/* ==========================================================
+   Dark Chrome – Stylesheet
+   Farben oben in :root anpassen.
+   ========================================================== */
+
+@font-face {
+  font-family: "Unbounded";
+  src: url("fonts/unbounded.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("fonts/figtree.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-top: #1b1e24;
+  --bg-bottom: #0d0f13;
+  --panel: #181b21;
+  --panel-edge: #2c313a;
+  --text: #dce1e8;
+  --text-muted: #a3adb9;
+  --ice: #8fd3ff;
+  --chrome-light: #f5f7fa;
+  --chrome-mid: #aab2bd;
+  --chrome-dark: #3a414c;
+  --radius: 14px;
+  --max: 1080px;
+  --gutter: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg-bottom);
+  background-image: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  background-attachment: fixed;
+}
+
+/* Dezente Scanlines über der ganzen Seite */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.018) 0,
+    rgba(255, 255, 255, 0.018) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Unbounded", system-ui, sans-serif;
+  line-height: 1.15;
+  margin: 0 0 0.6em;
+  color: #eef1f5;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--ice);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #c4e8ff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ice);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 200;
+  padding: 0.6em 1em;
+  background: var(--panel);
+  color: var(--ice);
+  border: 1px solid var(--ice);
+  border-radius: 8px;
+}
+
+.skip-link:focus {
+  top: var(--gutter);
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- Navigation ---------- */
+
+.site-nav {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+}
+
+.site-nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 64px;
+}
+
+.logo {
+  font-family: "Unbounded", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: #eef1f5;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo:hover {
+  color: #fff;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  color: var(--ice);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: clamp(4rem, 12vw, 8rem) 0 clamp(3.5rem, 9vw, 6rem);
+  text-align: center;
+}
+
+/* Wrapper: Lichtreflexe liegen außerhalb des h1,
+   damit der Filter des Schriftzugs sie nicht beeinflusst. */
+.chrome-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 1.4rem;
+}
+
+.chrome {
+  margin: 0;
+  padding: 0.05em 0.04em 0.12em;
+  font-family: "Unbounded", system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.3rem, 12.4vw, 9.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  color: #d9dee5; /* Fallback */
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #e9edf2 14%,
+    #b9c1cc 30%,
+    #7b8491 44%,
+    #f4f7fa 49.5%,
+    #ffffff 50%,
+    #262b33 51%,
+    #3d4450 58%,
+    #6f7885 70%,
+    #c3cad3 86%,
+    #f1f4f7 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35))
+    drop-shadow(0 3px 0 #0a0c0f)
+    drop-shadow(0 7px 0 rgba(0, 0, 0, 0.55))
+    drop-shadow(0 14px 18px rgba(0, 0, 0, 0.5));
+}
+
+.flare {
+  position: absolute;
+  width: clamp(26px, 6vw, 64px);
+  height: auto;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: flare-pulse 3.6s ease-in-out infinite;
+}
+
+.flare-1 {
+  left: 6%;
+  top: 14%;
+}
+
+.flare-2 {
+  left: 93%;
+  top: 70%;
+  width: clamp(18px, 4vw, 42px);
+  animation-delay: 1.8s;
+}
+
+@keyframes flare-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(12deg);
+  }
+}
+
+.hero-lead {
+  max-width: 34em;
+  margin: 0 auto 2rem;
+  font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+  color: var(--text);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem 1rem;
+}
+
+.follow-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.follow-label {
+  width: 100%;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0.7em 1.5em;
+  border-radius: 999px;
+  font-family: "Figtree", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+}
+
+.btn-chrome {
+  color: #0d0f13;
+  background: linear-gradient(
+    180deg,
+    #fbfcfd 0%,
+    #dfe4ea 38%,
+    #a6afba 52%,
+    #c7ced6 70%,
+    #eef1f4 100%
+  );
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 0 0 1px #07080a,
+    0 6px 14px rgba(0, 0, 0, 0.45);
+}
+
+.btn-chrome:hover {
+  color: #0d0f13;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #eceff3 38%,
+    #b7bfc9 52%,
+    #d6dce3 70%,
+    #f7f9fa 100%
+  );
+}
+
+.btn-dark {
+  color: #eef1f5;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(180deg, #20242b, #111317) padding-box,
+    linear-gradient(180deg, #f2f5f8, #7d8693 48%, #e4e8ed 52%, #6a727e) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 6px 14px rgba(0, 0, 0, 0.45);
+}
+
+.btn-dark:hover {
+  color: #ffffff;
+  background:
+    linear-gradient(180deg, #292e36, #16191e) padding-box,
+    linear-gradient(180deg, #ffffff, #9aa3ae 48%, #f2f5f8 52%, #7d8693) border-box;
+}
+
+.btn:focus-visible {
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+/* ---------- Metall-Paneele im Programmfenster-Stil ---------- */
+
+.section {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+.panel {
+  position: relative;
+  border-radius: var(--radius);
+  border: 1px solid var(--panel-edge);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0) 90px),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.012) 0,
+      rgba(255, 255, 255, 0.012) 1px,
+      rgba(0, 0, 0, 0.02) 1px,
+      rgba(0, 0, 0, 0.02) 3px
+    ),
+    linear-gradient(180deg, #1e2229, #14171c);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 18px 40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border-bottom: 1px solid #0b0d10;
+  background: linear-gradient(180deg, #4a515c 0%, #2d323a 48%, #22262d 52%, #2b3038 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  font-family: "Figtree", ui-monospace, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #d3d9e0;
+}
+
+.titlebar .file {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.win-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.win-btns span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #c8ced6, #6e7682);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 0 0 1px #0b0d10;
+}
+
+.panel-body {
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+}
+
+.panel-body > p {
+  max-width: 40em;
+  color: var(--text);
+}
+
+/* ---------- Vlog-Bildschirm ---------- */
+
+.screen {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin-top: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #0a0b0e;
+  background:
+    radial-gradient(ellipse at 50% 40%, #232830 0%, #0c0e11 75%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 0 60px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.screen-inner {
+  position: relative;
+  z-index: 1;
+  padding: 1.2rem;
+  max-width: 30em;
+}
+
+.screen-inner p {
+  margin-bottom: 1.1rem;
+}
+
+.screen-inner .btn {
+  margin: 0.25rem;
+}
+
+/* Auf schmalen Screens darf der Textbildschirm mitwachsen */
+@media (max-width: 640px) {
+  .screen:has(.screen-inner) {
+    aspect-ratio: auto;
+    min-height: 200px;
+  }
+
+  .screen-inner {
+    padding: 1.8rem 1rem;
+  }
+}
+
+/* Klick-zum-Laden (YouTube), aktiv sobald ein Vlog eingebunden ist */
+.yt-load {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  background: #0c0e11 center / cover no-repeat;
+}
+
+.yt-load .play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fbfcfd, #a6afba 52%, #eef1f4);
+  box-shadow: 0 0 0 1px #07080a, 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+.yt-load .yt-note {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  background: rgba(8, 9, 12, 0.85);
+}
+
+.screen iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- Leistungen ---------- */
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1.8rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.service {
+  padding: 1.3rem 1.3rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #2a2f37;
+  background: linear-gradient(180deg, #23272e, #181b20);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.service .icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 0.9rem;
+  color: var(--ice);
+}
+
+.service p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  margin-top: 2rem;
+  padding: 2.5rem 0 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.footer-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-list a {
+  color: var(--text);
+}
+
+.footer-list a:hover {
+  color: var(--ice);
+}
+
+/* ---------- Rechtstexte ---------- */
+
+.legal {
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+.legal h1 {
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 800;
+}
+
+.legal h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 1.8em;
+}
+
+.legal .panel-body > *:first-child {
+  margin-top: 0;
+}
+
+.legal address {
+  font-style: normal;
+  margin-bottom: 1em;
+}
+
+.legal ul {
+  padding-left: 1.2em;
+}
+
+.back {
+  display: inline-block;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Bewegung reduzieren ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .flare {
+    animation: none;
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .logo {
+    font-size: 0.9rem;
+  }
+}

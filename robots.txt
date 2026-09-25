@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://infoyngkid-creator.github.io/Joe-PS/sitemap.xml
