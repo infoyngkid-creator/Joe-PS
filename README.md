@@ -33,6 +33,7 @@ Impressum, Datenschutz und 404 behalten `noindex`.
 - `impressum.html`, `datenschutz.html` – Rechtstexte
 - `404.html` – Fehlerseite (Styles inline)
 - `style.css` – Design
+- `main.js` – Animationen (Einblenden, Timecode) und YouTube-Klick-zum-Laden
 - `fonts/` – Unbounded und Figtree (lokal, WOFF2, Lizenz: SIL Open Font License, siehe `OFL-*.txt`)
 - `robots.txt`, `sitemap.xml` – für Suchmaschinen
 - `.nojekyll` – GitHub Pages liefert die Dateien unverändert aus
