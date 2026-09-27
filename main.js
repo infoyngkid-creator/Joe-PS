@@ -17,13 +17,14 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
-  // Lichtkegel folgt der Maus im Hero (nur Desktop)
+  // Lichtkegel folgt der Maus im Hero: links warm (Joe), rechts kalt (psg). Nur Desktop.
   var hero = document.querySelector('.hero');
   if (hero && !reduce && window.matchMedia('(pointer: fine)').matches) {
     hero.addEventListener('pointermove', function (e) {
       var r = hero.getBoundingClientRect();
       hero.style.setProperty('--mx', (e.clientX - r.left) + 'px');
       hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      hero.style.setProperty('--t', ((e.clientX - r.left) / r.width).toFixed(3));
     });
   }
 
