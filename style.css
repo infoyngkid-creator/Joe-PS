@@ -822,3 +822,82 @@ a:hover {
     transform: none;
   }
 }
+
+/* ---------- Fluid (Hero) ---------- */
+
+.fluid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 1.2s var(--ease);
+}
+
+.fluid.is-on {
+  opacity: 1;
+}
+
+.hero {
+  touch-action: pan-y;
+}
+
+/* ---------- Foto (ASCII) ---------- */
+
+.photo {
+  margin: 0;
+  max-width: 560px;
+}
+
+.ascii {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0b0c;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.ascii img,
+.ascii canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ascii img {
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.ascii canvas {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease);
+}
+
+.ascii.is-on canvas {
+  opacity: 1;
+}
+
+.ascii.is-on img {
+  visibility: hidden;
+}
+
+.photo figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem 1.5rem;
+  margin-top: 0.9rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.photo figcaption a {
+  color: var(--text);
+  font-weight: 600;
+}

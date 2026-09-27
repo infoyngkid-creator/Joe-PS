@@ -14,6 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://infoyngkid-creator.github.io/Joe-PS/">
   <meta property="og:locale" content="de_DE">
+  <meta property="og:image" content="https://infoyngkid-creator.github.io/Joe-PS/fotos/duo.jpg">
 
   <meta name="theme-color" content="#0b0b0c">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0b0c'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='900' font-size='14' fill='%23fff'%3EJP%3C/text%3E%3C/svg%3E">
@@ -29,6 +30,7 @@
     "url": "https://infoyngkid-creator.github.io/Joe-PS/",
     "description": "Creator-Duo aus Bremen: Club-Vlogs, Sketche und Reels.",
     "location": {"@type": "Place", "name": "Bremen"},
+    "image": "https://infoyngkid-creator.github.io/Joe-PS/fotos/duo.jpg",
     "member": [
       {
         "@type": "Person",
@@ -67,6 +69,7 @@
   <main id="main">
     <!-- ===== Hero ===== -->
     <section class="hero">
+      <canvas class="fluid" aria-hidden="true"></canvas>
       <div class="wrap">
         <p class="kicker intro" style="--d: 0s"><span class="live" aria-hidden="true"></span>Electronic Press Kit · Bremen</p>
         <h1 class="name">JOE x PS</h1>
@@ -102,10 +105,29 @@
       </div>
     </section>
 
+    <!-- ===== Foto ===== -->
+    <section class="section" aria-labelledby="photo-title">
+      <div class="wrap grid">
+        <h2 id="photo-title" class="label"><span>02</span> Foto</h2>
+        <div data-reveal>
+          <figure class="photo">
+            <div class="ascii">
+              <img src="fotos/duo.jpg" width="1200" height="1600" loading="lazy" decoding="async" alt="JOELAREDO und PSGOTRICH im Club, Nachtlicht in Blau, Pink und Grün">
+              <canvas aria-hidden="true"></canvas>
+            </div>
+            <figcaption>
+              <span class="hint">Mit Maus oder Finger drüberfahren.</span>
+              <a href="fotos/duo.jpg" download="JOE-x-PS-Pressefoto.jpg">Pressefoto herunterladen (JPG)</a>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== Über uns ===== -->
     <section class="section" aria-labelledby="about-title">
       <div class="wrap grid">
-        <h2 id="about-title" class="label"><span>02</span> Über uns</h2>
+        <h2 id="about-title" class="label"><span>03</span> Über uns</h2>
         <div class="prose" data-reveal>
           <p class="big">Zwei Creator aus Bremen. Am Wochenende im Club, unter der Woche Sketche und Reels.</p>
           <p>JOE x PS sind JOELAREDO und PSGOTRICH. Wir filmen unsere Nächte in Bremer Clubs und machen daraus Vlogs und kurze Clips. Dazu kommen Sketche für Instagram und TikTok. Wir sind independent: kein Label, keine gekauften Follower, kein Paid Marketing.</p>
@@ -116,7 +138,7 @@
     <!-- ===== Mitglieder ===== -->
     <section class="section" aria-labelledby="members-title">
       <div class="wrap grid">
-        <h2 id="members-title" class="label"><span>03</span> Mitglieder</h2>
+        <h2 id="members-title" class="label"><span>04</span> Mitglieder</h2>
         <ul class="members" data-reveal>
           <li>
             <span class="member-name">JOELAREDO</span>
@@ -139,7 +161,7 @@
     <!-- ===== Club-Vlogs ===== -->
     <section class="section" id="vlogs" aria-labelledby="vlogs-title">
       <div class="wrap grid">
-        <h2 id="vlogs-title" class="label"><span>04</span> Club-Vlogs</h2>
+        <h2 id="vlogs-title" class="label"><span>05</span> Club-Vlogs</h2>
         <div data-reveal>
           <p class="section-text">Jedes Wochenende ein anderer Club. Von der Schlange bis zum letzten Song.</p>
           <div class="screen">
@@ -174,7 +196,7 @@
     <!-- ===== Booking ===== -->
     <section class="section" id="booking" aria-labelledby="booking-title">
       <div class="wrap grid">
-        <h2 id="booking-title" class="label"><span>05</span> Booking</h2>
+        <h2 id="booking-title" class="label"><span>06</span> Booking</h2>
         <div data-reveal>
           <p class="section-text">Für Clubs und Events. Wir sind vor Ort und produzieren Content vom Abend.</p>
           <ol class="services">
@@ -198,9 +220,9 @@
     <!-- ===== Presse & Kontakt ===== -->
     <section class="section" aria-labelledby="press-title">
       <div class="wrap grid">
-        <h2 id="press-title" class="label"><span>06</span> Presse &amp; Kontakt</h2>
+        <h2 id="press-title" class="label"><span>07</span> Presse &amp; Kontakt</h2>
         <div data-reveal>
-          <p class="section-text">Pressefotos und weitere Infos gibt es auf Anfrage.</p>
+          <p class="section-text">Pressefoto oben zum Download. Weitere Fotos und Infos auf Anfrage.</p>
           <a class="contact-mail" href="mailto:booking@example.com?subject=Booking-Anfrage">booking@example.com</a>
         </div>
       </div>
@@ -218,5 +240,7 @@
   </footer>
 
   <script src="main.js" defer></script>
+  <script src="fluid.js" defer></script>
+  <script src="ascii.js" defer></script>
 </body>
 </html>

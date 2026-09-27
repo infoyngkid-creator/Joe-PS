@@ -20,7 +20,7 @@ Datei auf GitHub öffnen → Stift-Symbol → ändern → „Commit changes“. 
 
 ## Ersten YouTube-Vlog einbinden
 
-In `index.html` im Bereich `club_vlogs.mpg` steht eine Schritt-für-Schritt-Anleitung als Kommentar.
+In `index.html` im Abschnitt „Club-Vlogs“ steht eine Schritt-für-Schritt-Anleitung als Kommentar.
 Das Video wird erst nach Klick von `youtube-nocookie.com` geladen. Danach in `datenschutz.html`
 den YouTube-Abschnitt aktivieren. Wenn ihr einen YouTube-Kanal habt, den Link auch im Footer und im JSON-LD ergänzen.
 
@@ -36,6 +36,9 @@ Impressum, Datenschutz und 404 behalten `noindex`.
 - `404.html` – Fehlerseite (Styles inline)
 - `style.css` – Design
 - `main.js` – Animationen (Einblenden, Timecode) und YouTube-Klick-zum-Laden
+- `fluid.js` – Flüssigkeits-Effekt im Hero (WebGL, reagiert auf Maus/Finger)
+- `ascii.js` – ASCII-Darstellung des Pressefotos mit Lupe
+- `fotos/duo.jpg` – Pressefoto (ohne Metadaten). Neues Foto: Datei mit gleichem Namen ersetzen
 - `fonts/` – Figtree (lokal, WOFF2, Lizenz: SIL Open Font License, siehe `OFL-*.txt`)
 - `robots.txt`, `sitemap.xml` – für Suchmaschinen
 - `.nojekyll` – GitHub Pages liefert die Dateien unverändert aus
