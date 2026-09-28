@@ -6,9 +6,10 @@
   if (!canvas) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var SIM_RES = 128;
-  var DYE_RES = window.innerWidth < 700 ? 384 : 768;
-  var PRESSURE_ITER = 20;
+  var small = window.innerWidth < 700;
+  var SIM_RES = small ? 96 : 128;
+  var DYE_RES = small ? 384 : 768;
+  var PRESSURE_ITER = small ? 14 : 20;
   var CURL = 22;
   var SPLAT_RADIUS = 0.22;
   var SPLAT_FORCE = 5000;
@@ -403,6 +404,17 @@
     if (t) move(t.clientX, t.clientY);
   }, { passive: true });
   host.addEventListener('touchend', function () { last = null; });
+
+  /* Scrollen wirbelt die Flüssigkeit auf (vor allem fürs Handy) */
+  var lastScroll = window.scrollY;
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    var d = y - lastScroll;
+    lastScroll = y;
+    if (!visible || Math.abs(d) < 2) return;
+    var x = 0.15 + Math.random() * 0.7;
+    splat(x, 0.2 + Math.random() * 0.6, (Math.random() - 0.5) * 300, d * 25, tint(1.4));
+  }, { passive: true });
 
   /* ---------- Schleife (pausiert, wenn Hero nicht sichtbar) ---------- */
 

@@ -16,6 +16,7 @@
 
   var dpr, W, H, fs, cw, cols, rows, lum, gray, shift, born;
   var pointer = null;
+  var auto = !window.matchMedia('(pointer: fine)').matches; /* Handy: Lupe wandert von selbst */
   var reveal = 0;
 
   function load() {
@@ -144,19 +145,24 @@
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
     for (var sy = 0; sy < H; sy += 3) ctx.fillRect(0, sy, W, 1);
 
-    /* Lupe: echtes Foto unter dem Zeiger */
-    if (pointer) {
+    /* Lupe: echtes Foto unter dem Zeiger (Handy: wandert automatisch) */
+    var lens = pointer;
+    if (!lens && auto && !reduce && reveal >= rows) {
+      var s = t / 1000;
+      lens = { x: W * (0.5 + 0.3 * Math.sin(s * 0.7)), y: H * (0.45 + 0.28 * Math.sin(s * 0.53 + 1.3)) };
+    }
+    if (lens) {
       var R = Math.min(W, H) * 0.2;
       ctx.save();
       ctx.beginPath();
-      ctx.arc(pointer.x, pointer.y, R, 0, Math.PI * 2);
+      ctx.arc(lens.x, lens.y, R, 0, Math.PI * 2);
       ctx.clip();
       ctx.drawImage(gray, 0, 0, W, H);
       ctx.restore();
       ctx.strokeStyle = 'rgba(255,255,255,0.6)';
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.arc(pointer.x, pointer.y, R, 0, Math.PI * 2);
+      ctx.arc(lens.x, lens.y, R, 0, Math.PI * 2);
       ctx.stroke();
     }
   }
