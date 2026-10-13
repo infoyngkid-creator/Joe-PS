@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>JOE x PS – Club-Vlogs aus Bremen</title>
   <meta name="description" content="JOE x PS sind JOELAREDO und PSGOTRICH aus Bremen: Club-Vlogs, Sketche und Reels. Press Kit und Booking für Clubs und Events.">
   <!-- noindex ENTFERNEN, sobald alle Platzhalter (Impressum, Booking-E-Mail) ersetzt sind -->
@@ -10,7 +10,7 @@
   <link rel="canonical" href="https://infoyngkid-creator.github.io/Joe-PS/">
 
   <meta property="og:title" content="JOE x PS – Club-Vlogs aus Bremen">
-  <meta property="og:description" content="JOELAREDO und PSGOTRICH. Creator-Duo aus Bremen: Club-Vlogs, Sketche und Reels.">
+  <meta property="og:description" content="JOELAREDO und PSGOTRICH aus Bremen. Club-Vlogs, Sketche, Reels.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://infoyngkid-creator.github.io/Joe-PS/">
   <meta property="og:locale" content="de_DE">
@@ -18,6 +18,7 @@
 
   <meta name="theme-color" content="#0b0b0c">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0b0c'/%3E%3Ctext x='16' y='21.5' text-anchor='middle' font-family='Arial,sans-serif' font-weight='900' font-size='14' fill='%23fff'%3EJP%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.add('js');</script>
@@ -35,6 +36,7 @@
       {
         "@type": "Person",
         "name": "JOELAREDO",
+        "image": "https://infoyngkid-creator.github.io/Joe-PS/fotos/joe-400.jpg",
         "sameAs": [
           "https://www.instagram.com/joelaredo_/",
           "https://www.tiktok.com/@joelaredo_"
@@ -43,6 +45,7 @@
       {
         "@type": "Person",
         "name": "PSGOTRICH",
+        "image": "https://infoyngkid-creator.github.io/Joe-PS/fotos/ps-960.jpg",
         "sameAs": [
           "https://www.instagram.com/psgotrich/",
           "https://www.tiktok.com/@psgotrich"
@@ -54,15 +57,13 @@
 </head>
 <body>
   <div class="progress" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"></div>
-  <div class="lights" aria-hidden="true"><span></span><span></span></div>
   <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
   <header class="site-nav">
     <nav class="wrap" aria-label="Hauptnavigation">
       <a class="logo" href="./">JOE x PS</a>
       <ul class="nav-links">
-        <li><a href="#vlogs">Vlogs</a></li>
+        <li><a href="#duo">Die zwei</a></li>
         <li><a href="#booking">Booking</a></li>
       </ul>
     </nav>
@@ -72,169 +73,166 @@
     <!-- ===== Hero ===== -->
     <section class="hero">
       <canvas class="fluid" aria-hidden="true"></canvas>
-      <div class="wrap">
-        <p class="kicker intro" style="--d: 0s"><span class="live" aria-hidden="true"></span><span data-scramble>Press Kit — Bremen</span></p>
+      <div class="wrap hero-inner">
+        <p class="kicker intro" style="--d: 0s"><span data-scramble>Bremen</span></p>
         <h1 class="name">JOE x PS</h1>
         <p class="lead intro" style="--d: 0.25s">JOELAREDO und PSGOTRICH.<br>Club-Vlogs, Sketche, Reels.</p>
         <div class="actions intro" style="--d: 0.4s">
           <!-- PLATZHALTER: booking@example.com durch die echte Booking-E-Mail ersetzen (auch weiter unten) -->
-          <a class="btn btn-solid magnetic" href="mailto:booking@example.com?subject=Booking-Anfrage">Booking</a>
-          <a class="btn btn-line magnetic" href="#vlogs">Vlogs</a>
+          <a class="btn btn-solid" href="mailto:booking@example.com?subject=Booking-Anfrage">Booking</a>
+          <a class="btn btn-line" href="#duo">Die zwei</a>
         </div>
       </div>
     </section>
 
-    <!-- ===== Laufband ===== -->
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker-track">
-        <span>Bremen</span><i>✦</i><span>Club-Vlogs</span><i>✦</i><span>Sketche</span><i>✦</i><span>Reels</span><i>✦</i><span>JOELAREDO</span><i>✦</i><span>PSGOTRICH</span><i>✦</i>
-        <span>Bremen</span><i>✦</i><span>Club-Vlogs</span><i>✦</i><span>Sketche</span><i>✦</i><span>Reels</span><i>✦</i><span>JOELAREDO</span><i>✦</i><span>PSGOTRICH</span><i>✦</i>
-      </div>
-    </div>
-
-    <!-- ===== Fakten ===== -->
-    <section class="section" aria-labelledby="facts-title">
-      <div class="wrap grid">
-        <h2 id="facts-title" class="label"><span>01</span> <em data-scramble>Fakten</em></h2>
-        <dl class="facts" data-reveal>
-          <div><dt>Mitglieder</dt><dd>JOELAREDO, PSGOTRICH</dd></div>
-          <div><dt>Standort</dt><dd>Bremen</dd></div>
-          <div><dt>Formate</dt><dd>Club-Vlogs, Sketche, Reels</dd></div>
-          <div><dt>Plattformen</dt><dd>Instagram, TikTok</dd></div>
-          <div><dt>Zielgruppe</dt><dd>18–24, Nightlife</dd></div>
-          <div><dt>Booking</dt><dd><a href="mailto:booking@example.com?subject=Booking-Anfrage">booking@example.com</a></dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- ===== Foto ===== -->
-    <section class="section" aria-labelledby="photo-title">
-      <div class="wrap grid">
-        <h2 id="photo-title" class="label"><span>02</span> <em data-scramble>Foto</em></h2>
-        <div data-reveal>
-          <figure class="photo">
-            <div class="ascii">
-              <img src="fotos/duo.jpg" width="1200" height="1600" loading="lazy" decoding="async" alt="JOELAREDO und PSGOTRICH im Club, Nachtlicht in Blau, Pink und Grün">
-              <canvas aria-hidden="true"></canvas>
-            </div>
-            <figcaption>
-              <span class="hint">Tippen oder drüberfahren.</span>
-              <a href="fotos/duo.jpg" download="JOE-x-PS-Pressefoto.jpg">Download (JPG)</a>
-            </figcaption>
-          </figure>
+    <!-- ===== Duo-Foto (ASCII) ===== -->
+    <section class="block photo-block">
+      <div class="wrap photo-grid">
+        <div class="photo-text" data-reveal>
+          <h2>Nachts in Bremen.</h2>
+          <p>Wir filmen Nächte in Bremer Clubs. Daraus werden Vlogs und Reels für Instagram und TikTok. Unter der Woche kommen Sketche dazu.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- ===== Über uns ===== -->
-    <section class="section" aria-labelledby="about-title">
-      <div class="wrap grid">
-        <h2 id="about-title" class="label"><span>03</span> <em data-scramble>Über uns</em></h2>
-        <div class="prose" data-reveal>
-          <p class="big">Wir filmen Nächte in Bremer Clubs.</p>
-          <p>Daraus werden Vlogs und Reels für Instagram und TikTok. Unter der Woche kommen Sketche dazu.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Mitglieder ===== -->
-    <section class="section" aria-labelledby="members-title">
-      <div class="wrap grid">
-        <h2 id="members-title" class="label"><span>04</span> <em data-scramble>Mitglieder</em></h2>
-        <ul class="members" data-reveal>
-          <li>
-            <span class="member-name" data-scramble>JOELAREDO</span>
-            <span class="member-links">
-              <a href="https://www.instagram.com/joelaredo_/" rel="me noopener">Instagram</a>
-              <a href="https://www.tiktok.com/@joelaredo_" rel="me noopener">TikTok</a>
-            </span>
-          </li>
-          <li>
-            <span class="member-name" data-scramble>PSGOTRICH</span>
-            <span class="member-links">
-              <a href="https://www.instagram.com/psgotrich/" rel="me noopener">Instagram</a>
-              <a href="https://www.tiktok.com/@psgotrich" rel="me noopener">TikTok</a>
-            </span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===== Club-Vlogs ===== -->
-    <section class="section" id="vlogs" aria-labelledby="vlogs-title">
-      <div class="wrap grid">
-        <h2 id="vlogs-title" class="label"><span>05</span> <em data-scramble>Club-Vlogs</em></h2>
-        <div data-reveal>
-          <p class="section-text">Jedes Wochenende ein anderer Club.</p>
-          <div class="screen">
-            <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-            <span class="rec" aria-hidden="true">REC</span>
-            <span class="timecode" aria-hidden="true">00:00:00:00</span>
-
-            <!-- Solange es noch keinen Vlog gibt: -->
-            <p class="screen-text">Erster Vlog in Arbeit.</p>
-
-            <!-- SOBALD DER ERSTE VLOG AUF YOUTUBE IST:
-                 1. Die Zeile <p class="screen-text"> oben löschen.
-                 2. Diesen Kommentar-Block entfernen, sodass der Button unten aktiv ist.
-                 3. VIDEO_ID durch die ID des Videos ersetzen (der Teil nach "watch?v=" bzw. nach "youtu.be/").
-                 4. In datenschutz.html den YouTube-Abschnitt aktivieren.
-                 Optional: ein eigenes Vorschaubild als Datei ins Repository legen (z. B. vlog1.jpg) und
-                 style="background-image: url('vlog1.jpg')" am Button ergänzen. Kein Bild von YouTube verlinken,
-                 sonst gehen schon vor dem Klick Daten an YouTube.
-
-            <button class="yt-load" type="button" data-video="VIDEO_ID">
-              <span class="play" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#0b0b0c"/></svg>
-              </span>
-              <span class="yt-note">Video abspielen. Beim Klick wird das Video von YouTube geladen und Daten an YouTube übertragen.</span>
-            </button>
-            -->
+        <figure class="photo" data-reveal>
+          <div class="ascii">
+            <img src="fotos/duo.jpg" width="1200" height="1600" loading="lazy" decoding="async" alt="JOELAREDO und PSGOTRICH im Club">
+            <canvas aria-hidden="true"></canvas>
           </div>
+          <figcaption>
+            <span>Tippen oder drüberfahren.</span>
+            <a href="fotos/duo.jpg" download="JOE-x-PS-Pressefoto.jpg">Pressefoto (JPG)</a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== Großes Bild ===== -->
+    <figure class="wide" aria-label="JOELAREDO nachts auf einem Auto, mit Gitarre">
+      <picture>
+        <source type="image/webp" srcset="fotos/joe-auto-1000.webp 1000w, fotos/joe-auto-1800.webp 1800w" sizes="100vw">
+        <img src="fotos/joe-auto-1800.jpg" srcset="fotos/joe-auto-1000.jpg 1000w, fotos/joe-auto-1800.jpg 1800w" sizes="100vw" width="1800" height="900" loading="lazy" decoding="async" alt="JOELAREDO sitzt nachts mit Gitarre auf einem Auto">
+      </picture>
+    </figure>
+
+    <!-- ===== Die zwei: 3D-Namen ===== -->
+    <section class="duo-scene" id="duo" aria-label="Die zwei">
+      <div class="stage">
+        <article class="member" data-member>
+          <div class="portrait">
+            <picture>
+              <source type="image/webp" srcset="fotos/joe-400.webp">
+              <img src="fotos/joe-400.jpg" width="400" height="500" loading="lazy" decoding="async" alt="Porträt JOELAREDO">
+            </picture>
+            <pre class="ascii-layer" aria-hidden="true"></pre>
+          </div>
+          <div class="name-wrap">
+            <h2 class="name3d" data-3d>JOELAREDO</h2>
+          </div>
+          <p class="handles">
+            <a href="https://www.instagram.com/joelaredo_/" rel="me noopener">Instagram</a>
+            <a href="https://www.tiktok.com/@joelaredo_" rel="me noopener">TikTok</a>
+          </p>
+        </article>
+
+        <article class="member" data-member>
+          <div class="portrait">
+            <picture>
+              <source type="image/webp" srcset="fotos/ps-600.webp 600w, fotos/ps-960.webp 960w" sizes="(max-width: 700px) 70vw, 440px">
+              <img src="fotos/ps-960.jpg" srcset="fotos/ps-600.jpg 600w, fotos/ps-960.jpg 960w" sizes="(max-width: 700px) 70vw, 440px" width="960" height="1200" loading="lazy" decoding="async" alt="Porträt PSGOTRICH">
+            </picture>
+            <pre class="ascii-layer" aria-hidden="true"></pre>
+          </div>
+          <div class="name-wrap">
+            <h2 class="name3d" data-3d>PSGOTRICH</h2>
+          </div>
+          <p class="handles">
+            <a href="https://www.instagram.com/psgotrich/" rel="me noopener">Instagram</a>
+            <a href="https://www.tiktok.com/@psgotrich" rel="me noopener">TikTok</a>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Kassette ===== -->
+    <section class="tape-scene" id="formate" aria-labelledby="tape-title">
+      <div class="stage">
+        <div class="tape-copy">
+          <h2 id="tape-title">Vol. 01</h2>
+          <ol class="tracks">
+            <li data-side="a"><span>A1</span> Club-Vlogs</li>
+            <li data-side="a"><span>A2</span> Sketche</li>
+            <li data-side="b"><span>B1</span> Reels</li>
+            <li data-side="b"><span>B2</span> Live im Club</li>
+          </ol>
+        </div>
+
+        <div class="tape-view" aria-hidden="true">
+          <div class="tape">
+            <div class="face front">
+              <div class="label">
+                <div class="label-top"><b>JOE x PS</b><i>A</i></div>
+                <div class="label-lines"><span>Club-Vlogs</span><span>Sketche</span></div>
+                <div class="window">
+                  <div class="reel l"><span></span></div>
+                  <div class="reel r"><span></span></div>
+                </div>
+                <div class="label-foot">Vol. 01 · Bremen</div>
+              </div>
+              <div class="bottom-plate"><i></i><i></i><i></i><i></i></div>
+              <s class="screw s1"></s><s class="screw s2"></s><s class="screw s3"></s><s class="screw s4"></s><s class="screw s5"></s>
+            </div>
+            <div class="face back">
+              <div class="label">
+                <div class="label-top"><b>JOE x PS</b><i>B</i></div>
+                <div class="label-lines"><span>Reels</span><span>Live im Club</span></div>
+                <div class="window">
+                  <div class="reel l"><span></span></div>
+                  <div class="reel r"><span></span></div>
+                </div>
+                <div class="label-foot">Vol. 01 · Bremen</div>
+              </div>
+              <div class="bottom-plate"><i></i><i></i><i></i><i></i></div>
+              <s class="screw s1"></s><s class="screw s2"></s><s class="screw s3"></s><s class="screw s4"></s><s class="screw s5"></s>
+            </div>
+            <div class="face side left"></div>
+            <div class="face side right"></div>
+            <div class="face cap top"></div>
+            <div class="face cap bottom"></div>
+          </div>
+          <div class="tape-shadow"></div>
         </div>
       </div>
     </section>
 
     <!-- ===== Booking ===== -->
-    <section class="section" id="booking" aria-labelledby="booking-title">
-      <div class="wrap grid">
-        <h2 id="booking-title" class="label"><span>06</span> <em data-scramble>Booking</em></h2>
-        <div data-reveal>
-          <p class="section-text">Für Clubs und Events.</p>
-          <ol class="services">
-            <li>
-              <h3>Vor Ort</h3>
-              <p>Wir sind den Abend über da und filmen.</p>
-            </li>
-            <li>
-              <h3>Reels für euch</h3>
-              <p>Geschnittene Clips für euren Account.</p>
-            </li>
-            <li>
-              <h3>Vlog</h3>
-              <p>Der Abend als Vlog auf unseren Kanälen.</p>
-            </li>
+    <section class="block booking" id="booking" aria-labelledby="booking-title">
+      <div class="wrap">
+        <h2 id="booking-title" class="big-title" data-reveal>Booking</h2>
+        <div class="booking-grid">
+          <ol class="services" data-reveal>
+            <li><h3>Vor Ort</h3><p>Wir sind den Abend über da und filmen.</p></li>
+            <li><h3>Reels für euch</h3><p>Geschnittene Clips für euren Account.</p></li>
+            <li><h3>Vlog</h3><p>Der Abend als Vlog auf unseren Kanälen.</p></li>
           </ol>
+          <div class="contact" data-reveal>
+            <p>Für Clubs und Events. Fotos und Infos auf Anfrage.</p>
+            <a class="contact-mail" href="mailto:booking@example.com?subject=Booking-Anfrage">booking@example.com</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== Presse & Kontakt ===== -->
-    <section class="section" aria-labelledby="press-title">
-      <div class="wrap grid">
-        <h2 id="press-title" class="label"><span>07</span> <em data-scramble>Presse &amp; Kontakt</em></h2>
-        <div data-reveal>
-          <p class="section-text">Mehr Fotos und Infos auf Anfrage.</p>
-          <a class="contact-mail" href="mailto:booking@example.com?subject=Booking-Anfrage">booking@example.com</a>
-        </div>
-      </div>
-    </section>
+    <!-- VLOG-BEREICH (später): Sobald der erste Vlog auf YouTube ist, kann hier ein Abschnitt
+         mit Klick-zum-Laden eingebaut werden (Button mit class="yt-load" und data-video="VIDEO_ID",
+         main.js lädt das Video dann erst nach Klick von youtube-nocookie.com).
+         Danach in datenschutz.html den YouTube-Abschnitt aktivieren. -->
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
       <p>© JOE x PS, Bremen</p>
       <ul class="footer-list">
+        <li><a href="https://www.instagram.com/joelaredo_/" rel="me noopener">@joelaredo_</a></li>
+        <li><a href="https://www.instagram.com/psgotrich/" rel="me noopener">@psgotrich</a></li>
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
       </ul>

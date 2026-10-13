@@ -1,38 +1,32 @@
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var finePointer = window.matchMedia('(pointer: fine)').matches;
+  var root = document.documentElement;
+  var small = window.innerWidth < 700;
 
-  /* ---------- Text-Decoding: Zeichen laufen durch, bis das Wort steht ---------- */
+  /* Ohne reduzierte Bewegung: Scroll-Szenen (Bühnen bleiben stehen, Inhalte drehen sich) */
+  root.classList.add(reduce ? 'no-scrolly' : 'scrolly');
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+  /* ---------- Text-Decoding (nur im Hero) ---------- */
 
   var CHARS = '!<>-_\\/[]{}=+*^?#%@01';
-
-  function scramble(el) {
-    if (reduce || el.dataset.busy) return;
-    var final = el.dataset.text || (el.dataset.text = el.textContent);
-    el.dataset.busy = '1';
+  document.querySelectorAll('[data-scramble]').forEach(function (el) {
+    if (reduce) return;
+    var final = el.textContent;
     var frame = 0;
-    var total = 14 + final.length * 1.5;
+    var total = 18 + final.length * 2;
     (function tick() {
       var out = '';
       for (var i = 0; i < final.length; i++) {
         var settle = (i / final.length) * total * 0.7 + total * 0.3;
-        if (frame >= settle || final[i] === ' ') out += final[i];
-        else out += CHARS[(Math.random() * CHARS.length) | 0];
+        out += frame >= settle || final[i] === ' ' ? final[i] : CHARS[(Math.random() * CHARS.length) | 0];
       }
       el.textContent = out;
-      frame++;
-      if (frame <= total) requestAnimationFrame(tick);
-      else {
-        el.textContent = final;
-        delete el.dataset.busy;
-      }
+      if (frame++ < total) requestAnimationFrame(tick);
+      else el.textContent = final;
     })();
-  }
-
-  var scrambles = document.querySelectorAll('[data-scramble]');
-  scrambles.forEach(function (el) {
-    el.dataset.text = el.textContent;
-    if (finePointer) el.addEventListener('pointerenter', function () { scramble(el); });
   });
 
   /* ---------- Einblenden beim Scrollen ---------- */
@@ -50,124 +44,191 @@
       });
     }, { rootMargin: '0px 0px -10% 0px' });
     items.forEach(function (el) { io.observe(el); });
-
-    var so = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          scramble(e.target);
-          so.unobserve(e.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -15% 0px' });
-    scrambles.forEach(function (el) { so.observe(el); });
   }
 
-  /* ---------- Scroll: Fortschritt, Hero-Parallax, Laufband ---------- */
+  /* ---------- 3D-Namen: Tiefe aus gestapelten Ebenen ---------- */
+
+  document.querySelectorAll('[data-3d]').forEach(function (h) {
+    var text = h.textContent;
+    var n = small ? 10 : 18;
+    for (var i = n; i >= 1; i--) {
+      var t = i / n;
+      var s = document.createElement('span');
+      s.className = 'layer';
+      s.setAttribute('aria-hidden', 'true');
+      s.textContent = text;
+      s.style.setProperty('--z', (-i * (small ? 0.016 : 0.011)).toFixed(4) + 'em');
+      s.style.setProperty('--c', 'hsl(220, 5%, ' + (60 - t * 48).toFixed(1) + '%)');
+      h.appendChild(s);
+    }
+  });
+
+  /* ---------- Porträts: ASCII-Ebene für den Glitch ---------- */
+
+  var RAMP = ' .:-=+*#%@';
+  function buildAscii(portrait) {
+    var img = portrait.querySelector('img');
+    var pre = portrait.querySelector('.ascii-layer');
+    if (!img || !pre) return;
+    function run() {
+      var cols = small ? 38 : 52;
+      var w = portrait.clientWidth || 300;
+      var fs = w / cols / 0.6;
+      var rows = Math.ceil(portrait.clientHeight / fs) || Math.round(cols * 1.25 * 0.6);
+      var c = document.createElement('canvas');
+      c.width = cols;
+      c.height = rows;
+      var x = c.getContext('2d');
+      try {
+        x.drawImage(img, 0, 0, cols, rows);
+        var d = x.getImageData(0, 0, cols, rows).data;
+      } catch (e) {
+        return;
+      }
+      var out = '';
+      for (var y = 0; y < rows; y++) {
+        for (var k = 0; k < cols; k++) {
+          var p = (y * cols + k) * 4;
+          var l = (0.299 * d[p] + 0.587 * d[p + 1] + 0.114 * d[p + 2]) / 255;
+          out += RAMP[Math.min(RAMP.length - 1, Math.floor(Math.pow(l, 0.8) * RAMP.length))];
+        }
+        out += '\n';
+      }
+      pre.textContent = out;
+      pre.style.fontSize = fs.toFixed(2) + 'px';
+    }
+    if (img.complete && img.naturalWidth) run();
+    else img.addEventListener('load', run, { once: true });
+  }
+
+  function glitch(portrait) {
+    if (reduce) return;
+    portrait.classList.remove('glitch');
+    void portrait.offsetWidth;
+    portrait.classList.add('glitch');
+    clearTimeout(portrait._g);
+    portrait._g = setTimeout(function () { portrait.classList.remove('glitch'); }, 800);
+  }
+
+  var portraits = document.querySelectorAll('.portrait');
+  portraits.forEach(function (p) {
+    buildAscii(p);
+    p.addEventListener('click', function () { glitch(p); });
+  });
+
+  /* ---------- Scroll-Schleife ---------- */
 
   var progress = document.querySelector('.progress');
-  var heroInner = document.querySelector('.hero .wrap');
-  var track = document.querySelector('.ticker-track');
+  var heroInner = document.querySelector('.hero-inner');
+  var wide = document.querySelector('.wide');
+  var duo = document.querySelector('.duo-scene');
+  var members = duo ? duo.querySelectorAll('[data-member]') : [];
+  var tapeScene = document.querySelector('.tape-scene');
+  var tape = document.querySelector('.tape');
+  var tracks = document.querySelectorAll('.tracks li');
+
+  function sceneProgress(el) {
+    var r = el.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    return total > 0 ? clamp(-r.top / total, 0, 1) : 0;
+  }
+
   var lastY = window.scrollY;
   var velocity = 0;
-  var tickerX = 0;
-  var dir = 1;
-
-  if (track && !reduce) track.classList.add('js-driven');
-
+  var spin = 0;
+  var activeMember = -1;
+  var activeTrack = -1;
   var prevT = performance.now();
+
   function frame(now) {
     var dt = Math.min(0.05, (now - prevT) / 1000);
     prevT = now;
+    var vh = window.innerHeight;
     var y = window.scrollY;
-    var dy = y - lastY;
+    velocity += (y - lastY - velocity) * 0.2;
     lastY = y;
-    velocity += (dy - velocity) * 0.2;
-    if (Math.abs(dy) > 0.5) dir = dy > 0 ? 1 : -1;
 
     if (progress) {
-      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var max = document.documentElement.scrollHeight - vh;
       progress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
     }
 
-    if (heroInner && !reduce) {
-      var h = window.innerHeight;
-      if (y < h * 1.2) {
-        var k = y / h;
-        heroInner.style.transform = 'translate3d(0,' + (y * 0.35) + 'px,0)';
-        heroInner.style.opacity = String(Math.max(0, 1 - k * 1.2));
+    if (reduce) return;
+
+    /* Hero schiebt sich langsamer weg */
+    if (heroInner && y < vh * 1.2) {
+      heroInner.style.transform = 'translate3d(0,' + (y * 0.35).toFixed(1) + 'px,0)';
+      heroInner.style.opacity = String(Math.max(0, 1 - (y / vh) * 1.2));
+    }
+
+    /* Großes Bild: Parallax */
+    if (wide) {
+      var wr = wide.getBoundingClientRect();
+      if (wr.bottom > 0 && wr.top < vh) {
+        var k = (wr.top + wr.height / 2 - vh / 2) / vh;
+        wide.style.setProperty('--py', (k * -70).toFixed(1) + 'px');
+        wide.style.setProperty('--ps', (1.06 + Math.abs(k) * 0.05).toFixed(3));
       }
     }
 
-    if (track && !reduce) {
-      var half = track.scrollWidth / 2;
-      tickerX -= (40 + Math.min(900, Math.abs(velocity) * 30)) * dt * dir;
-      if (tickerX <= -half) tickerX += half;
-      if (tickerX > 0) tickerX -= half;
-      track.style.transform = 'translate3d(' + tickerX + 'px,0,0)';
-      track.style.fontStyle = Math.abs(velocity) > 8 ? 'italic' : 'normal';
+    /* Die zwei: Namen drehen sich in 3D */
+    if (duo && members.length) {
+      var p = sceneProgress(duo);
+      var n = members.length;
+      var current = -1;
+      for (var i = 0; i < n; i++) {
+        var m = members[i];
+        var q = clamp(p * n - i, 0, 1);
+        var inRange = p * n - i >= 0 && p * n - i <= 1;
+        var fadeIn = i === 0 ? 1 : clamp(q / 0.14, 0, 1);
+        var fadeOut = i === n - 1 ? 1 : clamp((1 - q) / 0.14, 0, 1);
+        var o = inRange ? Math.min(fadeIn, fadeOut) : 0;
+        m.style.setProperty('--o', o.toFixed(3));
+        if (o > 0.01) {
+          if (current < 0 || o > 0.5) current = i;
+          var x = q * 2 - 1;
+          var ry = (x < 0 ? -1 : 1) * Math.pow(Math.abs(x), 1.7) * 78;
+          var name = m.querySelector('.name3d');
+          name.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+          name.style.setProperty('--rx', (x * -16).toFixed(2) + 'deg');
+          m.querySelector('.portrait').style.setProperty('--s', (1.14 - 0.14 * ease(clamp(q / 0.45, 0, 1))).toFixed(3));
+        }
+        m.classList.toggle('is-active', o > 0.01);
+      }
+      if (current !== activeMember) {
+        if (current >= 0) glitch(members[current].querySelector('.portrait'));
+        activeMember = current;
+      }
+    }
+
+    /* Kassette: dreht sich von Seite A auf Seite B */
+    if (tape && tapeScene) {
+      var tr = tapeScene.getBoundingClientRect();
+      if (tr.bottom > -vh && tr.top < vh * 2) {
+        var tp = sceneProgress(tapeScene);
+        tape.style.setProperty('--ry', (-32 + tp * 244).toFixed(2) + 'deg');
+        tape.style.setProperty('--rx', (16 - tp * 8 + Math.sin(tp * Math.PI) * 10).toFixed(2) + 'deg');
+        tape.style.setProperty('--rz', (Math.sin(tp * Math.PI * 2) * 4).toFixed(2) + 'deg');
+        tape.style.setProperty('--ty', (Math.sin(now / 900) * 6 - Math.sin(tp * Math.PI) * 14).toFixed(1) + 'px');
+        spin += (60 + Math.min(1400, Math.abs(velocity) * 40)) * dt;
+        tape.style.setProperty('--spin', (spin % 360).toFixed(1) + 'deg');
+        var t = Math.min(tracks.length - 1, Math.floor(tp * tracks.length));
+        if (t !== activeTrack) {
+          tracks.forEach(function (li, j) { li.classList.toggle('is-on', j === t); });
+          activeTrack = t;
+        }
+      }
     }
 
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+  if (reduce) window.addEventListener('scroll', function () { frame(performance.now()); }, { passive: true });
 
-  /* ---------- Cursor-Ring und magnetische Buttons (nur Desktop) ---------- */
-
-  var cursor = document.querySelector('.cursor');
-  if (cursor && finePointer && !reduce) {
-    var cx = -100, cy = -100, tx = -100, ty = -100;
-    document.addEventListener('pointermove', function (e) {
-      tx = e.clientX;
-      ty = e.clientY;
-      cursor.classList.add('is-on');
-    });
-    document.addEventListener('pointerleave', function () { cursor.classList.remove('is-on'); });
-    document.addEventListener('pointerover', function (e) {
-      var hot = e.target.closest && e.target.closest('a, button, .ascii');
-      cursor.classList.toggle('is-hot', !!hot);
-    });
-    (function follow() {
-      cx += (tx - cx) * 0.2;
-      cy += (ty - cy) * 0.2;
-      cursor.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
-      requestAnimationFrame(follow);
-    })();
-
-    document.querySelectorAll('.magnetic').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var mx = e.clientX - (r.left + r.width / 2);
-        var my = e.clientY - (r.top + r.height / 2);
-        el.style.transform = 'translate(' + mx * 0.25 + 'px,' + my * 0.35 + 'px)';
-      });
-      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
-  }
-
-  /* ---------- Lichtkegel im Hero (nur Desktop) ---------- */
-
-  var hero = document.querySelector('.hero');
-  if (hero && !reduce && finePointer) {
-    hero.addEventListener('pointermove', function (e) {
-      var r = hero.getBoundingClientRect();
-      hero.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-      hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
-  }
-
-  /* ---------- Laufender Timecode im Vlog-Bildschirm ---------- */
-
-  var tc = document.querySelector('.timecode');
-  if (tc && !reduce) {
-    var start = performance.now();
-    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
-    var tick = function (now) {
-      var t = (now - start) / 1000;
-      tc.textContent = pad(Math.floor(t / 3600)) + ':' + pad(Math.floor(t / 60) % 60) + ':' + pad(Math.floor(t) % 60) + ':' + pad(Math.floor((t % 1) * 25));
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
+  window.addEventListener('resize', function () {
+    clearTimeout(window._rs);
+    window._rs = setTimeout(function () { portraits.forEach(buildAscii); }, 250);
+  });
 
   /* ---------- YouTube erst nach Klick laden (Zwei-Klick-Lösung) ---------- */
 
