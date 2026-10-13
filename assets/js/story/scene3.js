@@ -4,10 +4,6 @@
    leicht zerknittert) dreht sich ins Bild – mit Facts aus den geparkten Inhalten.
    Nur transform/opacity. */
 
-/* Beleuchtete Mesas für den Mittag (Sandstein), werden über die dunklen Silhouetten geblendet */
-const LIT = { far: '#c98c5a', mid: '#9c5132', near: '#6b3f26' };
-let lit = [];
-
 export default {
   name: 'High Noon',
 
@@ -26,23 +22,8 @@ export default {
     tl.to(svg.querySelector('.sun-glow'), { scale: 1.6, duration: 0.4 }, t0);
     tl.fromTo(light, { opacity: 0 }, { opacity: 1, duration: 0.35 }, t0 + 0.05);
 
-    /* Mesas im Mittagslicht: Sandstein statt Silhouette (Kopie der Form, nur Deckkraft animiert) */
-    lit.forEach((p) => p.remove());
-    lit = Object.entries(LIT).map(([name, color]) => {
-      const g = svg.querySelector('.mesa-' + name);
-      const src = g.querySelector('path');
-      const copy = src.cloneNode(false);
-      copy.removeAttribute('id');
-      copy.setAttribute('fill', color);
-      copy.setAttribute('class', 'lit');
-      copy.style.opacity = 0;
-      const twin = copy.cloneNode(false);
-      twin.setAttribute('transform', 'translate(1600 0)');
-      g.insertBefore(twin, g.querySelector('.puff'));
-      g.insertBefore(copy, twin);
-      tl.fromTo([copy, twin], { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.inOut' }, t0 + 0.02);
-      return [copy, twin];
-    }).flat();
+    /* Mesas im Mittagslicht: gemalte Sandstein-Variante über die Gegenlicht-Ebenen blenden */
+    tl.fromTo(svg.querySelectorAll('.lit'), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.inOut' }, t0 + 0.02);
 
     /* Kamera-Zoom in die Landschaft, die Silhouette aus Szene 2 tritt zurück */
     tl.fromTo(svg, { scale: 1 }, { scale: 1.35, duration: 0.5, ease: 'power2.inOut' }, t0 + 0.05);
@@ -61,8 +42,5 @@ export default {
     tl.to(poster, { rotationZ: -3.6, duration: 0.12, ease: 'sine.inOut' }, t0 + 0.8);
   },
 
-  destroy() {
-    lit.forEach((p) => p.remove());
-    lit = [];
-  }
+  destroy() {}
 };

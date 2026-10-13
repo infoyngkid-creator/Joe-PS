@@ -5,7 +5,7 @@
    quer durchs Bild. Nur transform/opacity. */
 
 const SVGNS = 'http://www.w3.org/2000/svg';
-const PAN = { far: -140, mid: -360, near: -1000 };   // horizontale Verschiebung in SVG-Einheiten
+const PAN = { far: -90, mid: -240, near: -620 };   // horizontale Verschiebung in SVG-Einheiten
 let made = [];
 
 /* Freigestelltes Foto verwenden, wenn im HTML eingetragen (data-photo) – sonst Platzhalter-Silhouette */
@@ -26,6 +26,33 @@ function usePhoto(rider, body) {
     body.appendChild(el);
   };
   img.src = src;
+}
+
+/* Schrittzyklus für die Platzhalter-Figur. p = Anzahl Doppelschritte (1 = links + rechts). */
+function walker(body) {
+  const fig = body.querySelector('.walker');
+  if (!fig) return null;
+  const q = (c) => fig.querySelector(c);
+  const parts = {
+    la: q('.leg-a'), lb: q('.leg-b'), sa: q('.leg-a .shin'), sb: q('.leg-b .shin'),
+    aa: q('.arm-a'), ab: q('.arm-b'), fa: q('.arm-a .fore'), fb: q('.arm-b .fore')
+  };
+  const set = (el, x, y, r) => el.setAttribute('transform', `translate(${x} ${y}) rotate(${r.toFixed(2)})`);
+  const leg = (th) => {
+    const c = Math.cos(th);
+    return { hip: -26 * Math.sin(th), knee: 6 + 58 * Math.pow(Math.max(0, c), 1.6) };
+  };
+  return (p) => {
+    const th = p * Math.PI * 2;
+    const A = leg(th);
+    const B = leg(th + Math.PI);
+    const bob = -3.5 * Math.cos(2 * th);
+    set(parts.la, 0, -127 + bob, A.hip); set(parts.sa, 0, 61, A.knee);
+    set(parts.lb, 0, -127 + bob, B.hip); set(parts.sb, 0, 61, B.knee);
+    set(parts.aa, 2, -200 + bob, 22 * Math.sin(th)); set(parts.fa, 0, 44, -14 - 12 * Math.max(0, -Math.sin(th)));
+    set(parts.ab, 2, -200 + bob, -22 * Math.sin(th)); set(parts.fb, 0, 44, -14 - 12 * Math.max(0, Math.sin(th)));
+    fig.querySelector('.torso').setAttribute('transform', `translate(0 ${bob.toFixed(2)}) rotate(3 0 -120)`);
+  };
 }
 
 export default {
@@ -61,10 +88,13 @@ export default {
     /* Läufer: rein, dann mitlaufen */
     tl.fromTo(rider, { x: startX, y: 864 }, { x: stopX, y: 864, duration: enter, ease: 'none' }, t0);
     tl.to(rider, { x: riderX(1), duration: 1 - enter, ease: 'none' }, t0 + enter);
-    /* Gang: leichtes Auf und Ab pro Schritt + minimales Kippen */
-    const steps = 22;
-    tl.fromTo(body, { y: 0, rotation: -1.2, transformOrigin: '50% 100%' },
-      { y: -7, rotation: 1.2, duration: 1 / steps / 2, repeat: steps * 2 - 1, yoyo: true, ease: 'sine.inOut' }, t0);
+    /* Gang: echter Schrittzyklus (Hüfte, Knie, Schulter, Ellbogen) – nur transform */
+    const steps = 12;
+    const walk = walker(body);
+    if (walk) {
+      const ph = { p: 0 };
+      tl.fromTo(ph, { p: 0 }, { p: steps / 2, duration: 1, ease: 'none', onUpdate: () => walk(ph.p) }, t0);
+    }
 
     /* Staub am Boden: bei jedem Schritt eine kleine Wolke an den Füßen,
        sie bleibt dann am Boden liegen und zieht mit der Landschaft nach links weg */

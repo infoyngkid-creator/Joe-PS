@@ -22,6 +22,27 @@ if (root && gsap && ScrollTrigger && !reduce) {
 }
 
 let master = null;
+let trigger = null;
+
+/* Tempolimit: Die Story folgt dem Scrollen weich und höchstens so schnell –
+   egal wie schnell gescrollt wird (Einheiten = Szenen pro Sekunde). */
+const MAX_SPEED = 0.38;
+const SMOOTH = 5;           /* wie schnell sie aufholt (größer = direkter) */
+let target = 0;
+let current = 0;
+let jump = true;            /* erster Wert (z. B. Neuladen mitten in der Seite) ohne Fahrt */
+
+function follow(time, deltaTime) {
+  if (!master) return;
+  const dt = Math.min(deltaTime, 100) / 1000;
+  const total = master.duration();
+  let step = (target - current) * Math.min(1, dt * SMOOTH);
+  const max = (MAX_SPEED * dt) / total;
+  step = Math.max(-max, Math.min(max, step));
+  if (Math.abs(target - current) < 0.00005) return;
+  current += step;
+  master.progress(current);
+}
 
 async function start() {
   /* Schrift muss geladen sein, damit der Staub die echte Buchstabenform bekommt */
@@ -29,6 +50,7 @@ async function start() {
     await document.fonts.load('900 100px "Basement Grotesque"');
   } catch (e) { /* weiter mit Ersatzschrift */ }
   build();
+  gsap.ticker.add(follow);
 
   /* Bei Breitenänderung neu aufbauen (Höhenänderung durch Handy-Adressleiste ignorieren) */
   let w = window.innerWidth;
@@ -46,17 +68,7 @@ function build() {
   const stage = root.querySelector('.story-stage');
   const ctx = { root, stage, small: window.innerWidth < 700, view: visibleRange(stage) };
 
-  master = gsap.timeline({
-    defaults: { ease: 'none' },
-    scrollTrigger: {
-      trigger: root,
-      start: 'top top',
-      end: () => '+=' + window.innerHeight * SCENES.length,
-      pin: true,
-      scrub: 0.8,
-      invalidateOnRefresh: true
-    }
-  });
+  master = gsap.timeline({ defaults: { ease: 'none' }, paused: true });
 
   SCENES.forEach((scene, i) => {
     master.addLabel('scene' + (i + 1), i);
@@ -65,6 +77,20 @@ function build() {
   });
 
   landscape.build(master, SCENES.length, ctx);
+
+  trigger = ScrollTrigger.create({
+    trigger: root,
+    start: 'top top',
+    end: () => '+=' + window.innerHeight * SCENES.length,
+    pin: true,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => {
+      target = self.progress;
+      if (jump) { current = target; master.progress(current); jump = false; }
+    }
+  });
+  target = trigger.progress;
+  master.progress(current);
 }
 
 /* Sichtbarer Ausschnitt der SVG-Landschaft (viewBox 1600×900, „slice“, unten mittig).
@@ -80,12 +106,13 @@ function visibleRange(stage) {
 
 function rebuild() {
   if (master) {
-    const progress = master.scrollTrigger ? master.scrollTrigger.progress : 0;
-    master.scrollTrigger && master.scrollTrigger.kill(true);
+    master.progress(0);
+    trigger && trigger.kill(true);
     master.kill();
     SCENES.forEach((s) => s.destroy && s.destroy());
     build();
     ScrollTrigger.refresh();
-    if (master.scrollTrigger) master.progress(progress);
+    current = target = trigger.progress;
+    master.progress(current);
   }
 }

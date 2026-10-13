@@ -813,3 +813,49 @@
     animation: none;
   }
 }
+
+/* ---------- Filmlook: Korn + Vignette über der ganzen Story ---------- */
+
+.story-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(ellipse 120% 90% at 50% 45%, transparent 55%, rgba(5, 4, 3, 0.55) 100%);
+}
+
+.story-stage::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: 6;
+  pointer-events: none;
+  background: url("../img/land/grain.png");
+  background-size: 180px 180px;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  animation: grain 0.9s steps(4) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-6%, 4%); }
+  50% { transform: translate(5%, -3%); }
+  75% { transform: translate(-3%, -6%); }
+  100% { transform: translate(0, 0); }
+}
+
+.land .walker,
+.land .walker g {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-stage::before { animation: none; }
+}
+
+/* Lichtkante, damit die Silhouette sich vom dunklen Boden löst */
+.land .walker {
+  filter: drop-shadow(0 0 1.2px rgba(243, 207, 134, 0.75)) drop-shadow(0 0 6px rgba(230, 169, 43, 0.25));
+}

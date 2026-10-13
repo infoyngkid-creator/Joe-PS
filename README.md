@@ -89,7 +89,11 @@ Unterseiten verweisen mit `../` auf `assets/`, `fotos/` usw.
 
 - Eine gepinnte Sektion, Scroll = Zeit, 5 Szenen à 1 Bildschirmhöhe Scrollweg.
 - GSAP + ScrollTrigger 3.13 vom CDN (jsDelivr) mit SRI-Prüfsumme. In `datenschutz.html` erwähnt.
-- Landschaft komplett als SVG in `joe-laredo/index.html` (Himmel, Sterne, Sonne, 3 Mesa-Ebenen).
+- Landschaft: Himmel, Sterne, Sonne als SVG in `joe-laredo/index.html`. Die 3 Mesa-Ebenen sind gemalte Bilder
+  (`assets/img/land/*.webp`, je Gegenlicht + Mittagslicht), erzeugt mit `python3 scripts/landschaft.py`
+  aus den Formen in `scripts/mesa-formen.svg`. Dunst zwischen den Ebenen übernimmt automatisch die Himmelsfarbe.
+- Tempolimit: Die Story folgt dem Scrollen weich und höchstens `MAX_SPEED` Szenen pro Sekunde
+  (`assets/js/story/story.js`), egal wie schnell gescrollt wird.
 - Animiert wird nur `transform` und `opacity`.
 
 ```
