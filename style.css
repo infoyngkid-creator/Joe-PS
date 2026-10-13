@@ -1355,3 +1355,7 @@ a {
 .scrolly .member {
   z-index: 1;
 }
+
+.spec div[hidden] {
+  display: none;
+}

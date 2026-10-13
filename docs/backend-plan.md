@@ -38,6 +38,12 @@ einzelne kleine Funktion in der EU (Phase 3) – getrennt vom Rest.
 - **Content Security Policy** auf allen Seiten: Der Browser führt nur Code von dieser Domain aus.
   Fremde Skripte, Tracker oder eingeschleuster Code werden blockiert.
 
+### Phase 0b – erledigt
+- **Follower-Tool:** GitHub Actions holt täglich die Instagram-Zahlen über die offizielle API
+  und schreibt sie nach `content/stats.json`. Token nur in GitHub Secrets. Anleitung: `docs/follower-tool.md`.
+- **Pages CMS vorbereitet:** `.pages.yml` gibt nur `content/termine.json` zur Bearbeitung frei.
+  Ein Zugang (euer GitHub-Konto). Einrichtung siehe README.
+
 ### Phase 1 – Inhalte in Dateien, Build-Schritt
 - Alle Texte, Zahlen, Fotos in `content/site.json` (bzw. Markdown) verschieben.
 - Kleiner Build (z. B. Eleventy) über **GitHub Actions** baut daraus fertige HTML-Seiten.
@@ -67,6 +73,6 @@ einzelne kleine Funktion in der EU (Phase 3) – getrennt vom Rest.
 
 ## Offene Entscheidungen
 
-1. Wer pflegt Inhalte – ihr beide oder eine dritte Person?
-2. Ist ein Drittanbieter-CMS mit GitHub-Login okay (Pages CMS), oder lieber komplett selbst gehostet (Decap + eigener Login-Dienst)?
+1. ~~Wer pflegt Inhalte?~~ → ein Zugang
+2. ~~Drittanbieter-CMS okay?~~ → ja, Pages CMS
 3. Braucht ihr in den nächsten Monaten ein Booking-Formular, oder reicht die E-Mail?

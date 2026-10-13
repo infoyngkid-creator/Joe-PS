@@ -1,0 +1,29 @@
+# Konfiguration für Pages CMS (https://pagescms.org)
+# Login über GitHub. Bearbeitet nur die hier freigegebenen Dateien.
+
+content:
+  - name: termine
+    label: Termine
+    type: file
+    path: content/termine.json
+    format: json
+    fields:
+      - name: termine
+        label: Termine
+        type: object
+        list: true
+        fields:
+          - name: datum
+            label: Datum
+            type: date
+            required: true
+          - name: club
+            label: Club
+            type: string
+            required: true
+          - name: stadt
+            label: Stadt
+            type: string
+          - name: link
+            label: Link (muss mit https:// anfangen, optional)
+            type: string
