@@ -10,9 +10,10 @@ Datei auf GitHub öffnen → Stift-Symbol → ändern → „Commit changes“. 
 | Was | Wo |
 | --- | --- |
 | Duo-Name `JOE&PS` | in HTML als `JOE&amp;PS` geschrieben (Titel, Logo, Kassette, Footer, Rechtstexte, 404), im JSON-LD als `JOE&PS` |
-| Text „Nachts in Bremen.“ | `index.html`, Abschnitt Duo-Foto |
+| Text „Zwei aus Bremen.“ | `index.html`, Abschnitt Duo-Foto |
 | Kassette (Titel, Tracks) | `index.html`, Abschnitt „Kassette“: Liste `tracks` und die Etiketten `label-lines` |
-| Leistungen Booking | `index.html`, Abschnitt „Booking“ |
+| Kurz-Bio, Pressefotos | `index.html`, Abschnitt „Press Kit“ |
+| Kontakt-Kategorien | `index.html`, Abschnitt „Kontakt“ |
 | Satz unter dem Namen | `index.html`, `<p class="lead">` |
 | Booking-E-Mail `con.joe-laredo@outlook.de` | `index.html`, 3 Stellen – per Suchen & Ersetzen |
 | Social-Links | `index.html`: Abschnitt „Die zwei“, Footer und JSON-LD (`sameAs`) |
@@ -24,13 +25,14 @@ Datei auf GitHub öffnen → Stift-Symbol → ändern → „Commit changes“. 
 
 1. <https://app.pagescms.org> öffnen → „Sign in with GitHub“ (mit dem Konto, dem das Repo gehört).
 2. Die Pages-CMS-App **nur für das Repository `Joe-PS`** freigeben.
-3. Repo `Joe-PS` wählen → links „Termine“ → eintragen → Speichern. Nach ca. 1 Minute live.
+3. Repo `Joe-PS` wählen → links „Termine“ oder „Follower“ → eintragen → Speichern. Nach ca. 1 Minute live.
 
-Freigegeben ist aktuell nur `content/termine.json` (Konfiguration: `.pages.yml`).
+Freigegeben sind aktuell Termine und Follower (Konfiguration: `.pages.yml`).
 
 ## Follower-Zahlen
 
-Werden täglich automatisch geholt. Einmalige Einrichtung: `docs/follower-tool.md`.
+Werden manuell gepflegt: Pages CMS → „Follower“ (oder `content/stats.json` direkt bearbeiten).
+Leeres Feld = Zeile „Follower“ wird nicht angezeigt. Automatischer Abruf optional: `docs/follower-tool.md`.
 
 ## Termine eintragen (ohne CMS)
 

@@ -1,4 +1,7 @@
-# Follower-Tool einrichten (einmalig, ca. 20 Minuten)
+# Follower-Tool einrichten (optional)
+
+> **Aktuell:** Follower werden manuell gepflegt (Pages CMS → „Follower“). Diese Anleitung ist nur
+> für später, falls die Zahlen automatisch kommen sollen.
 
 Die Website zeigt bei jedem von euch die Instagram-Follower. Die Zahlen holt einmal am Tag
 eine GitHub-Automatisierung (`.github/workflows/follower.yml`) über die **offizielle
@@ -40,7 +43,7 @@ Repository → **Settings → Secrets and variables → Actions → New reposito
 | `IG_USER_ID` | die Instagram-Business-ID (nur Ziffern) |
 
 Danach: **Actions → „Follower aktualisieren“ → Run workflow**. Nach ca. 1–2 Minuten stehen die Zahlen auf der Seite.
-Ab dann läuft es täglich automatisch.
+Für täglichen Abruf in `.github/workflows/follower.yml` den `schedule`-Block wieder einkommentieren.
 
 ## Sicherheit
 

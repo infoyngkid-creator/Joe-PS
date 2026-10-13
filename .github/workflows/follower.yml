@@ -1,8 +1,11 @@
 name: Follower aktualisieren
 
+# Entscheidung: Follower werden vorerst MANUELL gepflegt (Pages CMS → „Follower“).
+# Diese Automatisierung ist optional und läuft nur, wenn man sie per Hand startet.
+# Für täglichen Abruf: den schedule-Block wieder einkommentieren (Einrichtung: docs/follower-tool.md).
 on:
-  schedule:
-    - cron: "17 5 * * *"   # täglich ca. 7 Uhr deutscher Zeit
+  # schedule:
+  #   - cron: "17 5 * * *"   # täglich ca. 7 Uhr deutscher Zeit
   workflow_dispatch:        # manuell starten: Actions → Follower aktualisieren → Run workflow
 
 permissions:

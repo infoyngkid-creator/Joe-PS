@@ -1,5 +1,8 @@
 # Backend-Plan: Inhalte selbst pflegen + Termine
 
+> Positionierung: JOE&PS sind öffentliche Personen. Die Website ist ihr **Press Kit (EPK)** –
+> für Presse, Brands/Kooperationen und Events, nicht nur für Clubs.
+
 Stand: Planung. Es läuft noch kein Server. Ziel ist, dass ihr Texte, Fotos, Zahlen und Termine
 selbst ändern könnt, ohne Code anzufassen – und dass dabei nichts angreifbar wird.
 
@@ -39,9 +42,10 @@ einzelne kleine Funktion in der EU (Phase 3) – getrennt vom Rest.
   Fremde Skripte, Tracker oder eingeschleuster Code werden blockiert.
 
 ### Phase 0b – erledigt
-- **Follower-Tool:** GitHub Actions holt täglich die Instagram-Zahlen über die offizielle API
-  und schreibt sie nach `content/stats.json`. Token nur in GitHub Secrets. Anleitung: `docs/follower-tool.md`.
-- **Pages CMS vorbereitet:** `.pages.yml` gibt nur `content/termine.json` zur Bearbeitung frei.
+- **Follower: Entscheidung = manuell pflegen.** Zahlen stehen in `content/stats.json` und werden
+  im Pages CMS unter „Follower“ eingetragen. Ein automatischer Abruf über die offizielle Instagram-API
+  ist vorbereitet (`.github/workflows/follower.yml`), aber abgeschaltet. Anleitung: `docs/follower-tool.md`.
+- **Pages CMS vorbereitet:** `.pages.yml` gibt nur `content/termine.json` und `content/stats.json` zur Bearbeitung frei.
   Ein Zugang (euer GitHub-Konto). Einrichtung siehe README.
 
 ### Phase 1 – Inhalte in Dateien, Build-Schritt

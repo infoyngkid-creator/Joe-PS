@@ -27,3 +27,23 @@ content:
           - name: link
             label: Link (muss mit https:// anfangen, optional)
             type: string
+
+  - name: follower
+    label: Follower
+    type: file
+    path: content/stats.json
+    format: json
+    fields:
+      - name: aktualisiert
+        label: Stand (Datum)
+        type: date
+      - name: instagram
+        label: Instagram-Follower
+        type: object
+        fields:
+          - name: joelaredeo_
+            label: JOELAREDO (@joelaredeo_)
+            type: number
+          - name: psgotrich_
+            label: PSGOTRICH (@psgotrich_)
+            type: number

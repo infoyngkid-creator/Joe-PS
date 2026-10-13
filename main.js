@@ -55,7 +55,9 @@
     h.setAttribute('aria-label', text);
     h.textContent = '';
     h._chars = [];
-    text.split('').forEach(function (letter) {
+    var letters = text.split('');
+    var mid = (letters.length - 1) / 2;
+    letters.forEach(function (letter, idx) {
       var c = document.createElement('span');
       c.className = 'ch';
       c.setAttribute('aria-hidden', 'true');
@@ -71,14 +73,16 @@
           : 'hsl(214, 14%, ' + (58 - t * 48).toFixed(1) + '%)');
         c.appendChild(l);
       }
-      /* Zufällige Flugbahn für das Zerlegen */
+      /* Flugbahn: jeder Buchstabe fliegt von seiner Position nach außen, bis aus dem Bild */
+      var side = mid ? (idx - mid) / mid : 0;
+      var up = Math.random() < 0.5 ? -1 : 1;
       c._v = {
-        x: (Math.random() - 0.5) * 2.4,
-        y: (Math.random() - 0.5) * 2.2,
-        z: 2 + Math.random() * 5,
-        rx: (Math.random() - 0.5) * 220,
-        ry: (Math.random() - 0.5) * 260,
-        rz: (Math.random() - 0.5) * 90
+        x: side * (3.2 + Math.random() * 2.2) + (Math.random() - 0.5) * 1.2,
+        y: up * (2.4 + Math.random() * 2.4),
+        z: -1.5 + Math.random() * 4,
+        rx: (Math.random() - 0.5) * 320,
+        ry: (Math.random() - 0.5) * 360,
+        rz: (Math.random() - 0.5) * 140
       };
       h.appendChild(c);
       h._chars.push(c);
@@ -221,6 +225,8 @@
               'translate3d(' + (v.x * sc).toFixed(3) + 'em,' + (v.y * sc).toFixed(3) + 'em,' + (v.z * sc).toFixed(3) + 'em) ' +
               'rotateX(' + (v.rx * sc).toFixed(1) + 'deg) rotateY(' + (v.ry * sc).toFixed(1) + 'deg) rotateZ(' + (v.rz * sc).toFixed(1) + 'deg)';
           }
+          /* ganz außen zusätzlich ausblenden (an der Hülle, damit die 3D-Tiefe bleibt) */
+          m.querySelector('.name-wrap').style.opacity = (1 - Math.pow(sc, 3)).toFixed(3);
           var spec = m.querySelector('.spec');
           if (spec) spec.style.opacity = (1 - Math.min(1, sc * 2.2)).toFixed(3);
           m.querySelector('.portrait').style.setProperty('--s', (1.14 - 0.14 * ease(clamp(q / 0.45, 0, 1))).toFixed(3));
@@ -263,6 +269,20 @@
   window.addEventListener('resize', function () {
     clearTimeout(window._rs);
     window._rs = setTimeout(function () { portraits.forEach(buildAscii); }, 250);
+  });
+
+  /* ---------- Bio kopieren ---------- */
+
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var src = document.querySelector(btn.getAttribute('data-copy'));
+      if (!src || !navigator.clipboard) return;
+      navigator.clipboard.writeText(src.textContent.trim()).then(function () {
+        var t = btn.textContent;
+        btn.textContent = 'Kopiert';
+        setTimeout(function () { btn.textContent = t; }, 1600);
+      });
+    });
   });
 
   /* ---------- YouTube erst nach Klick laden (Zwei-Klick-Lösung) ---------- */
