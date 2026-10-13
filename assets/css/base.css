@@ -1,44 +1,50 @@
 /* ==========================================================
-   JOE x PS – Press Kit
-   Farben oben in :root anpassen.
+   JOE&PS – gemeinsames Stylesheet (alle Seiten)
+   Farben oben in :root anpassen. Pfade relativ zu dieser Datei.
    ========================================================== */
 
 @font-face {
-  font-family: "Archivo";
-  src: url("fonts/archivo.woff2") format("woff2");
-  font-weight: 100 900;
-  font-stretch: 62% 125%;
+  font-family: "Basement Grotesque";
+  src: url("../../fonts/basement-grotesque-black.woff2") format("woff2");
+  font-weight: 800 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Figtree";
-  src: url("fonts/figtree.woff2") format("woff2");
+  src: url("../../fonts/figtree.woff2") format("woff2");
   font-weight: 300 900;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --bg: #0b0b0c;
-  --text: #f2f2f2;
-  --muted: #8d8d93;
-  --line: rgba(255, 255, 255, 0.12);
-  --paper: #e9e5dc;
-  /* JOELAREDO: warm – Denim, Leder, Whiskey, Creme */
-  --joe-bone: #efe4cf;
-  --joe-tan: #c99a62;
-  --joe-rust: #8a4b2a;
-  --joe-glow: rgba(214, 150, 80, 0.2);
-  /* PSGOTRICH: kalt – Chrom, Eis, Schwarz */
-  --ps-chrome: #eef3f9;
-  --ps-steel: #8fa1b8;
-  --ps-glow: rgba(150, 185, 235, 0.18);
+  /* Palette */
+  --asphalt: #141210;
+  --bone: #e8dfcc;
+  --gold: #e6a92b;
+  --oxblood: #7c241d;
+  --dusk: #33465f;
+  --khaki: #9a8863;
+
+  --bg: var(--asphalt);
+  --text: var(--bone);
+  --muted: var(--khaki);
+  --line: rgba(232, 223, 204, 0.14);
+  --paper: var(--bone);
+
+  /* JOE LAREDO: warm */
+  --joe-bone: var(--bone);
+  --joe-glow: rgba(230, 169, 43, 0.2);
+  /* PSGOTRICH: kalt */
+  --ps-chrome: #eef1f4;
+  --ps-glow: rgba(51, 70, 95, 0.55);
+
   --max: 1240px;
   --gutter: 16px;
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
-  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --display: "Basement Grotesque", "Arial Black", system-ui, sans-serif;
 }
 
 *,
@@ -88,7 +94,6 @@ h2,
 h3 {
   margin: 0;
   font-family: var(--display);
-  font-stretch: 75%;
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.01em;
@@ -105,7 +110,7 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--gold);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -116,8 +121,8 @@ a {
   top: -100px;
   z-index: 200;
   padding: 0.6em 1em;
-  background: #fff;
-  color: #000;
+  background: var(--bone);
+  color: var(--asphalt);
 }
 
 .skip-link:focus {
@@ -145,7 +150,7 @@ a {
   z-index: 60;
   width: 100%;
   height: 2px;
-  background: #fff;
+  background: var(--bone);
   transform: scaleX(0);
   transform-origin: left;
   pointer-events: none;
@@ -157,7 +162,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(11, 11, 12, 0.72);
+  background: rgba(20, 18, 16, 0.78);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
@@ -172,7 +177,6 @@ a {
 
 .logo {
   font-family: var(--display);
-  font-stretch: 75%;
   font-weight: 900;
   font-size: 1.15rem;
   letter-spacing: 0.01em;
@@ -214,7 +218,7 @@ a {
 .nav-links a:hover,
 .footer-list a:hover,
 .handles a:hover {
-  color: #fff;
+  color: var(--bone);
 }
 
 .nav-links a:hover::after,
@@ -266,10 +270,9 @@ a {
   margin-bottom: 1.4rem;
   font-size: clamp(5rem, 27vw, 17rem);
   font-weight: 900;
-  font-stretch: 70%;
   line-height: 0.82;
   letter-spacing: -0.03em;
-  color: #fff;
+  color: var(--bone);
   animation: rise 1.2s var(--ease) both;
 }
 
@@ -327,7 +330,7 @@ a {
   margin-bottom: 1.8rem;
   font-size: clamp(1.15rem, 2.4vw, 1.4rem);
   line-height: 1.4;
-  color: #c9c9ce;
+  color: rgba(232, 223, 204, 0.82);
 }
 
 .actions {
@@ -368,23 +371,23 @@ a {
 }
 
 .btn-solid {
-  color: #000;
-  background: #fff;
-  border: 1px solid #fff;
+  color: var(--asphalt);
+  background: var(--bone);
+  border: 1px solid var(--bone);
 }
 
 .btn-solid:hover {
-  background: #d9d9d9;
-  border-color: #d9d9d9;
+  background: var(--gold);
+  border-color: var(--gold);
 }
 
 .btn-line {
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--bone);
+  border: 1px solid rgba(232, 223, 204, 0.3);
 }
 
 .btn-line:hover {
-  border-color: #fff;
+  border-color: var(--bone);
 }
 
 .btn:focus-visible {
@@ -433,13 +436,12 @@ section[id] {
   margin-bottom: 1.2rem;
   font-size: clamp(2.6rem, 8vw, 5.5rem);
   font-weight: 900;
-  font-stretch: 70%;
 }
 
 .photo-text p {
   max-width: 28em;
   font-size: 1.1rem;
-  color: #c9c9ce;
+  color: rgba(232, 223, 204, 0.82);
 }
 
 .photo {
@@ -451,7 +453,7 @@ section[id] {
   aspect-ratio: 3 / 4;
   border: 1px solid var(--line);
   overflow: hidden;
-  background: #0b0b0c;
+  background: var(--asphalt);
   cursor: crosshair;
   touch-action: pan-y;
 }
@@ -571,7 +573,7 @@ section[id] {
   line-height: 1;
   white-space: pre;
   color: #e9eef7;
-  background: #0b0b0c;
+  background: var(--asphalt);
   opacity: 0;
   pointer-events: none;
 }
@@ -598,7 +600,7 @@ section[id] {
 .name-wrap {
   position: relative;
   margin-top: -0.55em;
-  font-size: min(19vw, 210px);
+  font-size: min(10.5vw, 150px);
   perspective: 900px;
   pointer-events: none;
 }
@@ -607,10 +609,9 @@ section[id] {
   position: relative;
   font-size: 1em;
   font-weight: 900;
-  font-stretch: 68%;
   line-height: 0.9;
   letter-spacing: 0;
-  color: #fff;
+  color: var(--bone);
   white-space: nowrap;
   opacity: calc(1 - var(--sc, 0) * 1.5);
 }
@@ -755,7 +756,6 @@ section[id] {
   margin-bottom: 1.6rem;
   font-size: clamp(3rem, 10vw, 7rem);
   font-weight: 900;
-  font-stretch: 70%;
 }
 
 .tracks {
@@ -771,10 +771,9 @@ section[id] {
   padding: 0.9rem 0;
   border-bottom: 1px solid var(--line);
   font-family: var(--display);
-  font-stretch: 80%;
   font-weight: 700;
   font-size: clamp(1.3rem, 3vw, 1.9rem);
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(232, 223, 204, 0.3);
   transition: color 0.4s var(--ease);
 }
 
@@ -786,7 +785,6 @@ section[id] {
   max-height: 0;
   overflow: hidden;
   font-family: "Figtree", system-ui, sans-serif;
-  font-stretch: 100%;
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--muted);
@@ -811,7 +809,7 @@ section[id] {
 
 .tracks li.is-on,
 .no-scrolly .tracks li {
-  color: #fff;
+  color: var(--bone);
 }
 
 .tape-view {
@@ -934,7 +932,6 @@ section[id] {
 
 .label-top b {
   font-family: var(--display);
-  font-stretch: 70%;
   font-weight: 900;
   font-size: calc(var(--w) * 0.075);
   line-height: 1;
@@ -1141,7 +1138,6 @@ section[id] {
 
 .d-club {
   font-family: var(--display);
-  font-stretch: 75%;
   font-weight: 800;
   font-size: clamp(1.5rem, 4vw, 2.4rem);
   line-height: 1.05;
@@ -1191,7 +1187,6 @@ section[id] {
 .press-grid h3 {
   margin-bottom: 1rem;
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-stretch: 100%;
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--muted);
@@ -1232,7 +1227,6 @@ section[id] {
 
 .downloads a span {
   font-family: var(--display);
-  font-stretch: 78%;
   font-weight: 800;
   font-size: 1.5rem;
 }
@@ -1265,7 +1259,6 @@ section[id] {
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
   font-size: clamp(4.5rem, 22vw, 15rem);
   font-weight: 900;
-  font-stretch: 65%;
   line-height: 0.82;
   letter-spacing: -0.02em;
 }
@@ -1298,7 +1291,6 @@ section[id] {
 
 .services h3 {
   font-size: 1.6rem;
-  font-stretch: 80%;
   font-weight: 800;
 }
 
@@ -1308,13 +1300,12 @@ section[id] {
 }
 
 .contact p {
-  color: #c9c9ce;
+  color: rgba(232, 223, 204, 0.82);
 }
 
 .contact-mail {
   display: inline-block;
   font-family: var(--display);
-  font-stretch: 75%;
   font-size: clamp(1.9rem, 7vw, 3.8rem);
   font-weight: 800;
   line-height: 1.1;
@@ -1372,7 +1363,6 @@ section[id] {
   margin-bottom: 1.5rem;
   font-size: clamp(2.8rem, 10vw, 4.5rem);
   font-weight: 900;
-  font-stretch: 70%;
 }
 
 .legal h2 {
@@ -1441,4 +1431,82 @@ section[id] {
 
 .spec div[hidden] {
   display: none;
+}
+
+/* ---------- Hilfsklassen und Unterseiten ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.scrolly .duo-scene {
+  height: calc(var(--n, 2) * 220vh);
+}
+
+.placeholder {
+  min-height: calc(100svh - 56px);
+  display: flex;
+  align-items: flex-end;
+  padding: 6rem 0 clamp(3rem, 8vw, 6rem);
+  background:
+    radial-gradient(70% 60% at 70% 30%, rgba(230, 169, 43, 0.14), transparent 70%),
+    radial-gradient(60% 50% at 10% 90%, rgba(124, 36, 29, 0.35), transparent 70%);
+}
+
+.placeholder-name {
+  margin-bottom: 2rem;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(4rem, 18vw, 14rem);
+  line-height: 0.85;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.page-end-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.dl {
+  font-weight: 700;
+}
+
+.site-footer .legal-links a {
+  color: var(--muted);
+}
+
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal-links a {
+  display: inline-block;
+  padding: 0.35em 0;
+  text-decoration: none;
+}
+
+.legal-links a:hover {
+  color: var(--bone);
+}
+
+@media (max-width: 700px) {
+  .name-wrap {
+    font-size: 12vw;
+  }
 }

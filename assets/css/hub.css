@@ -1,0 +1,361 @@
+/* ==========================================================
+   Hub (Startseite): zwei große Hälften
+   ========================================================== */
+
+.hub-page {
+  overflow: hidden;
+}
+
+.hub {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 520px;
+  display: grid;
+  grid-template-rows: 1fr;
+  touch-action: pan-y;
+}
+
+/* Fluid liegt über den Hälften, lässt Klicks durch */
+.hub .fluid {
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hub .fluid.is-on {
+  opacity: 0.55;
+}
+
+/* ---------- Kopf und Fuß ---------- */
+
+.hub-top,
+.hub-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 18px var(--gutter);
+  pointer-events: none;
+}
+
+.hub-top a,
+.hub-bottom a {
+  pointer-events: auto;
+}
+
+.hub-top {
+  top: 0;
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0.75), transparent);
+}
+
+.hub-bottom {
+  bottom: 0;
+  flex-wrap: wrap;
+  padding-bottom: calc(18px + env(safe-area-inset-bottom));
+  background: linear-gradient(0deg, rgba(20, 18, 16, 0.85), transparent);
+}
+
+.hub-top .logo {
+  font-size: 1.3rem;
+}
+
+.hub-loc {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.soc-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.soc-group span {
+  margin-right: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--bone);
+  border: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s var(--ease);
+}
+
+.socials a:hover {
+  border-color: rgba(232, 223, 204, 0.35);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.socials svg {
+  width: 20px;
+  height: 20px;
+}
+
+.legal-links {
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.legal-links a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.legal-links a:hover {
+  color: var(--bone);
+}
+
+/* ---------- Die zwei Hälften ---------- */
+
+.halves {
+  display: flex;
+  height: 100%;
+}
+
+.half {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 clamp(20px, 4vw, 56px) clamp(110px, 16vh, 150px);
+  overflow: hidden;
+  color: var(--bone);
+  text-decoration: none;
+  isolation: isolate;
+  container-type: inline-size;
+  transition: flex-grow 0.8s var(--ease);
+}
+
+.half + .half {
+  border-left: 1px solid var(--line);
+}
+
+.half-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.half-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  filter: grayscale(0.35) brightness(0.55) contrast(1.05);
+  transition: transform 1.2s var(--ease), filter 0.8s var(--ease);
+}
+
+.half-joe .half-bg img {
+  object-position: 74% 50%;
+}
+
+.half-ps .half-bg img {
+  object-position: 50% 30%;
+}
+
+/* Farbstimmung pro Person */
+.half::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transition: opacity 0.8s var(--ease);
+}
+
+.half-joe::after {
+  background:
+    linear-gradient(0deg, rgba(124, 36, 29, 0.55) 0%, transparent 55%),
+    linear-gradient(0deg, var(--asphalt) 0%, transparent 40%);
+}
+
+.half-ps::after {
+  background:
+    linear-gradient(0deg, rgba(51, 70, 95, 0.7) 0%, transparent 55%),
+    linear-gradient(0deg, var(--asphalt) 0%, transparent 40%);
+}
+
+.half-no {
+  margin-bottom: auto;
+  padding-top: clamp(80px, 12vh, 120px);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.half-name {
+  font-family: var(--display);
+  font-weight: 900;
+  /* Größe richtet sich nach der Breite der Hälfte (wächst beim Hover mit) */
+  font-size: 11.5cqi;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  transition: color 0.5s var(--ease), transform 0.8s var(--ease);
+}
+
+.half-cta {
+  margin-top: 1.4rem;
+  font-weight: 700;
+  opacity: 0.7;
+  transition: opacity 0.4s, transform 0.5s var(--ease);
+}
+
+.half-cta span {
+  display: inline-block;
+  transition: transform 0.4s var(--ease);
+}
+
+/* Hover / Fokus: gewählte Hälfte wächst und leuchtet, die andere wird dunkel */
+.half:hover,
+.half:focus-visible {
+  flex-grow: 1.5;
+  outline: none;
+}
+
+.half:hover .half-bg img,
+.half:focus-visible .half-bg img {
+  transform: scale(1.02);
+  filter: grayscale(0) brightness(0.85) contrast(1.05);
+}
+
+.half-joe:hover .half-name,
+.half-joe:focus-visible .half-name {
+  color: var(--gold);
+}
+
+.half-ps:hover .half-name,
+.half-ps:focus-visible .half-name {
+  color: #eef1f4;
+}
+
+.half:hover .half-cta,
+.half:focus-visible .half-cta {
+  opacity: 1;
+}
+
+.half:hover .half-cta span,
+.half:focus-visible .half-cta span {
+  transform: translateX(6px);
+}
+
+.halves:has(.half:hover) .half:not(:hover) .half-bg img,
+.halves:has(.half:focus-visible) .half:not(:focus-visible) .half-bg img {
+  filter: grayscale(1) brightness(0.22);
+}
+
+.halves:has(.half:hover) .half:not(:hover) .half-name,
+.halves:has(.half:focus-visible) .half:not(:focus-visible) .half-name {
+  opacity: 0.35;
+}
+
+.half:focus-visible .half-name {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
+}
+
+/* ---------- Einblenden beim Laden ---------- */
+
+.half {
+  animation: half-in 1.1s var(--ease) both;
+}
+
+.half-ps {
+  animation-delay: 0.12s;
+}
+
+@keyframes half-in {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.half-ps {
+  animation-name: half-in-up;
+}
+
+@keyframes half-in-up {
+  from { clip-path: inset(100% 0 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.half-name {
+  animation: rise 1.1s var(--ease) 0.35s both;
+}
+
+/* ---------- Handy: übereinander ---------- */
+
+@media (max-width: 700px) {
+  .halves {
+    flex-direction: column;
+  }
+
+  .half {
+    padding-bottom: 1.4rem;
+  }
+
+  .half-joe {
+    padding-top: 70px;
+  }
+
+  .half-ps {
+    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  }
+
+  .half + .half {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .half-no {
+    padding-top: 0;
+  }
+
+  .half-name {
+    font-size: 12.5cqi;
+  }
+
+  .half-cta {
+    margin-top: 0.8rem;
+  }
+
+  .hub-bottom {
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .soc-group span {
+    display: none;
+  }
+
+  .legal-links {
+    width: 100%;
+    justify-content: center;
+  }
+}

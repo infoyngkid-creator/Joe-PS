@@ -1,5 +1,4 @@
-Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
-
+Copyright 2021 basement grotesque by basement.studio and original Designer (as listed on https://github.com/basementstudio/basement-grotesque).
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 http://scripts.sil.org/OFL

@@ -2,6 +2,7 @@
    Sicherheit: Daten werden nur als Text eingefügt (textContent, nie innerHTML),
    Links nur mit https://, alles wird vor der Anzeige geprüft. */
 (function () {
+  var base = document.currentScript ? document.currentScript.src : location.href;
   var section = document.getElementById('termine');
   if (!section || !window.fetch) return;
   var list = section.querySelector('.dates');
@@ -26,7 +27,7 @@
     return e;
   }
 
-  fetch('content/termine.json', { cache: 'no-cache', credentials: 'omit' })
+  fetch(new URL('../../content/termine.json', base), { cache: 'no-cache', credentials: 'omit' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (data) {
       if (!data || !Array.isArray(data.termine)) return;

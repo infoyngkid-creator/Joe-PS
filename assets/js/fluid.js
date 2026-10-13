@@ -367,10 +367,10 @@
     dye.swap();
   }
 
-  /* Kühles Weiß mit leichtem Blaustich */
+  /* Bone: warmes Off-White */
   function tint(k) {
     var v = 0.12 + Math.random() * 0.1;
-    return [v * 0.78 * k, v * 0.88 * k, v * k];
+    return [v * k, v * 0.94 * k, v * 0.82 * k];
   }
 
   function randomSplats(n) {

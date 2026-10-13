@@ -64,24 +64,36 @@ den YouTube-Abschnitt aktivieren. Wenn ihr einen YouTube-Kanal habt, den Link au
 In `index.html` steht `<meta name="robots" content="noindex">`. Erst entfernen, wenn alle Platzhalter ersetzt sind.
 Impressum, Datenschutz und 404 behalten `noindex`.
 
-## Dateien
+## Aufbau der Seite
 
-- `index.html` – Startseite
-- `impressum.html`, `datenschutz.html` – Rechtstexte
-- `404.html` – Fehlerseite (Styles inline)
-- `style.css` – Design
-- `main.js` – Scroll-Effekte (3D-Namen, Kassette, Parallax, Porträt-Glitch) und YouTube-Klick-zum-Laden
-- `fluid.js` – Flüssigkeits-Effekt im Hero (WebGL, reagiert auf Maus/Finger)
-- `ascii.js` – ASCII-Darstellung des Pressefotos mit Lupe
-- `names3d.js` – echte 3D-Namen (WebGL, Messing/Chrom). Ohne WebGL bleibt normale Schrift stehen
-- `vendor/three/` – three.js (MIT-Lizenz) und die Schrift Archivo als 3D-Schriftdatei, alles lokal
-- `stats.js` – zeigt Follower aus `content/stats.json`
-- `scripts/update-followers.mjs`, `.github/workflows/follower.yml` – Follower-Tool
-- `.pages.yml` – Konfiguration Pages CMS
-- `termine.js` – zeigt Termine aus `content/termine.json` an (sicher, nur als Text)
-- `content/` – Inhalte als Dateien (Vorbereitung fürs Backend)
-- `docs/backend-plan.md` – Backend-Plan
-- `fotos/` – Fotos (ohne Metadaten, als JPG und WebP). Neues Foto: Datei mit gleichem Namen ersetzen
-- `fonts/` – Archivo (Überschriften) und Figtree (Text), lokal, WOFF2, Lizenz: SIL Open Font License, siehe `OFL-*.txt`)
-- `robots.txt`, `sitemap.xml` – für Suchmaschinen
-- `.nojekyll` – GitHub Pages liefert die Dateien unverändert aus
+```
+index.html              Startseite (Hub): zwei Hälften „Joe Laredo“ / „PSGOTRICH“
+joe-laredo/index.html   Platzhalter für die Scroll-Story + geparkter Rohinhalt (<template id="rohinhalt">)
+psgotrich/index.html    PSGOTRICH: Porträt + 3D-Chrom-Name
+impressum.html, datenschutz.html, 404.html
+assets/css/base.css     gemeinsames CSS (Farben, Schriften, Animationen, alle Bausteine)
+assets/css/hub.css      nur für die Startseite
+assets/js/              main.js (Scroll-Effekte), fluid.js, ascii.js, names3d.js (3D),
+                        termine.js, stats.js
+fotos/                  Fotos (ohne Metadaten, JPG + WebP)
+fonts/                  Basement Grotesque (Headlines), Figtree (Text) – SIL Open Font License
+vendor/three/           three.js (MIT) + Basement Grotesque als 3D-Schriftdatei
+content/                Termine, Follower (für das CMS)
+docs/                   Backend-Plan, Follower-Tool
+```
+
+Alle Pfade sind relativ, damit alles unter `…github.io/Joe-PS/` funktioniert.
+Unterseiten verweisen mit `../` auf `assets/`, `fotos/` usw.
+
+## Farben
+
+| Name | Wert | Einsatz |
+| --- | --- | --- |
+| Asphalt | `#141210` | Hintergrund |
+| Bone | `#E8DFCC` | Text |
+| Camel Gold | `#E6A92B` | Akzent, Joe |
+| Oxblood | `#7C241D` | Joe-Stimmung |
+| Dusk Blue | `#33465F` | PS-Stimmung |
+| Faded Khaki | `#9A8863` | Nebentext |
+
+Definiert ganz oben in `assets/css/base.css` (`:root`).

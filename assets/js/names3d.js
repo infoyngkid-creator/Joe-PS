@@ -28,10 +28,10 @@ if (scene3d && !reduce && hasWebGL() && 'IntersectionObserver' in window) {
 }
 
 async function start() {
-  const THREE = await import('./vendor/three/three.module.min.js');
-  const { FontLoader } = await import('./vendor/three/FontLoader.js');
-  const { TextGeometry } = await import('./vendor/three/TextGeometry.js');
-    const fontData = await (await fetch('vendor/three/archivo-black.typeface.json')).json();
+  const THREE = await import('../../vendor/three/three.module.min.js');
+  const { FontLoader } = await import('../../vendor/three/FontLoader.js');
+  const { TextGeometry } = await import('../../vendor/three/TextGeometry.js');
+    const fontData = await (await fetch(new URL('../../vendor/three/basement-grotesque.typeface.json', import.meta.url))).json();
   const font = new FontLoader().parse(fontData);
 
   const stage = scene3d.querySelector('.stage');
