@@ -145,3 +145,59 @@
     display: none;
   }
 }
+
+/* ---------- Szene 2: The Ride ---------- */
+
+.land .rider,
+.land .rider-body,
+.land .tumbleweed,
+.land .tw-spin,
+.land .puff {
+  will-change: transform, opacity;
+}
+
+.scene-2 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: calc(56px + 12vh) clamp(20px, 7vw, 120px) 0;
+}
+
+.bio-line {
+  max-width: 15em;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 3.6vw, 3.2rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--bone);
+  text-shadow: 0 0.05em 0.5em rgba(20, 18, 16, 0.45);
+  opacity: 0;
+}
+
+/* Ohne Animation: Läufer steht im Bild, Bio sichtbar, Tumbleweed versteckt */
+.story:not(.is-live) .rider {
+  transform: translate(560px, 864px);
+}
+
+.story:not(.is-live) .tumbleweed {
+  opacity: 0;
+}
+
+.story:not(.is-live) .bio-line {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .scene-2 {
+    justify-content: center;
+    padding-top: calc(56px + 8vh);
+  }
+
+  .bio-line {
+    text-align: center;
+    font-size: 7.4vw;
+  }
+}

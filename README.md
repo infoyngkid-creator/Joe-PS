@@ -97,9 +97,20 @@ assets/js/story/story.js           Steuerung: Master-Timeline, Pin, Szenen-Reihe
 assets/js/story/landscape.js       Parallax der Mesa-Ebenen über die ganze Story
 assets/js/story/dust.js            Buchstaben → Staubpartikel (aus der echten Buchstabenform)
 assets/js/story/scene1-sunrise.js  Szene 1: Sonnenaufgang, Name zerfällt zu Staub
-assets/js/story/scene2.js … 5.js   leer, für die nächsten Szenen
+assets/js/story/scene2.js          Szene 2: The Ride (Läufer, Parallax, Bodenstaub, Bio-Satz, Tumbleweed)
+assets/js/story/scene3.js … 5.js   leer, für die nächsten Szenen
 assets/css/story.css               Styles der Story
 ```
+
+Joe als Silhouette (Szene 2): Foto als `assets/img/joe1.jpg` ablegen, dann
+
+```
+pip install "rembg[cpu]" pillow
+python3 scripts/freistellen.py assets/img/joe1.jpg
+```
+
+Das erzeugt `joe1-cutout.webp` (freigestellt) und `joe1-silhouette.webp` (dunkel mit Lichtkante)
+und trägt die Silhouette in `joe-laredo/index.html` ein (`data-photo`). Ohne Foto läuft eine Platzhalter-Figur.
 
 Neue Szene bauen: in `sceneN.js` die Funktion `build(tl, t0, ctx)` füllen. `t0` ist der Startzeitpunkt der
 Szene auf der Timeline, jede Szene ist 1 Einheit lang.

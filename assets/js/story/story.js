@@ -43,7 +43,8 @@ async function start() {
 
 function build() {
   root.classList.add('is-live');
-  const ctx = { root, stage: root.querySelector('.story-stage'), small: window.innerWidth < 700 };
+  const stage = root.querySelector('.story-stage');
+  const ctx = { root, stage, small: window.innerWidth < 700, view: visibleRange(stage) };
 
   master = gsap.timeline({
     defaults: { ease: 'none' },
@@ -64,6 +65,17 @@ function build() {
   });
 
   landscape.build(master, SCENES.length, ctx);
+}
+
+/* Sichtbarer Ausschnitt der SVG-Landschaft (viewBox 1600×900, „slice“, unten mittig).
+   Am Handy ist nur die Mitte sichtbar – Figuren sollen trotzdem am Bildrand starten. */
+function visibleRange(stage) {
+  const w = stage.clientWidth || window.innerWidth;
+  const h = stage.clientHeight || window.innerHeight;
+  const scale = Math.max(w / 1600, h / 900);
+  const vw = w / scale;
+  const vh = h / scale;
+  return { left: 800 - vw / 2, right: 800 + vw / 2, width: vw, top: 900 - vh };
 }
 
 function rebuild() {
