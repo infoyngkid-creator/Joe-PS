@@ -18,7 +18,7 @@ const gsapDir = path.dirname(require.resolve('gsap/package.json')) + '/dist/';
 
 (async () => {
   fs.mkdirSync(outDir, { recursive: true });
-  const b = await chromium.launch();
+  const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader'] });
   const sets = [['d', { viewport: { width: 1280, height: 800 } }], ['m', { ...devices['iPhone 13'] }]]
     .filter(([n]) => which.includes(n));
   for (const [name, opt] of sets) {

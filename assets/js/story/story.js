@@ -3,6 +3,7 @@
    Szenen liegen je in einer eigenen Datei und bekommen (timeline, start) übergeben. */
 
 import landscape from './landscape.js';
+import { createStage } from './stage3d.js';
 import scene1 from './scene1-sunrise.js';
 import scene2 from './scene2.js';
 import scene3 from './scene3.js';
@@ -49,6 +50,18 @@ async function start() {
   try {
     await document.fonts.load('900 100px "Basement Grotesque"');
   } catch (e) { /* weiter mit Ersatzschrift */ }
+  /* 3D-Bühne (WebGL). Klappt das nicht, bleibt die SVG-Landschaft als Rückfall. */
+  try {
+    if (hasWebGL()) {
+      await createStage(root.querySelector('.story-stage'), {
+        small: window.innerWidth < 700,
+        getTime: () => (master ? master.time() : 0)
+      });
+      root.classList.add('is-3d');
+    }
+  } catch (e) {
+    root.querySelector('.stage3d')?.remove();
+  }
   build();
   gsap.ticker.add(follow);
 
@@ -91,6 +104,15 @@ function build() {
   });
   target = trigger.progress;
   master.progress(current);
+}
+
+function hasWebGL() {
+  try {
+    const c = document.createElement('canvas');
+    return !!(c.getContext('webgl2') || c.getContext('webgl'));
+  } catch (e) {
+    return false;
+  }
 }
 
 /* Sichtbarer Ausschnitt der SVG-Landschaft (viewBox 1600×900, „slice“, unten mittig).
