@@ -98,7 +98,8 @@ assets/js/story/landscape.js       Parallax der Mesa-Ebenen über die ganze Stor
 assets/js/story/dust.js            Buchstaben → Staubpartikel (aus der echten Buchstabenform)
 assets/js/story/scene1-sunrise.js  Szene 1: Sonnenaufgang, Name zerfällt zu Staub
 assets/js/story/scene2.js          Szene 2: The Ride (Läufer, Parallax, Bodenstaub, Bio-Satz, Tumbleweed)
-assets/js/story/scene3.js … 5.js   leer, für die nächsten Szenen
+assets/js/story/scene3.js          Szene 3: High Noon (Mittagslicht, Zoom auf Joe, harter Schatten, Steckbrief)
+assets/js/story/scene4.js, 5.js    leer, für die nächsten Szenen
 assets/css/story.css               Styles der Story
 ```
 
@@ -111,6 +112,10 @@ python3 scripts/freistellen.py assets/img/joe1.jpg
 
 Das erzeugt `joe1-cutout.webp` (freigestellt) und `joe1-silhouette.webp` (dunkel mit Lichtkante)
 und trägt die Silhouette in `joe-laredo/index.html` ein (`data-photo`). Ohne Foto läuft eine Platzhalter-Figur.
+
+Joe farbig (Szene 3): `assets/img/joe2.jpg` ablegen und `python3 scripts/freistellen.py assets/img/joe2.jpg` ausführen.
+Bis dahin zeigt Szene 3 das freigestellte Diner-Porträt (`assets/img/joe-portrait-cutout.webp`).
+Steckbrief-Texte: in `joe-laredo/index.html` im Block `class="wanted"`.
 
 Neue Szene bauen: in `sceneN.js` die Funktion `build(tl, t0, ctx)` füllen. `t0` ist der Startzeitpunkt der
 Szene auf der Timeline, jede Szene ist 1 Einheit lang.

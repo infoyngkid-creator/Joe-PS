@@ -56,6 +56,12 @@
               <stop offset="0.82" stop-color="#e6a92b"/>
               <stop offset="1" stop-color="#f3cf86"/>
             </linearGradient>
+            <linearGradient id="sky-noon" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f7ecd3"/>
+              <stop offset="0.45" stop-color="#f1d9a4"/>
+              <stop offset="0.8" stop-color="#e9b955"/>
+              <stop offset="1" stop-color="#e6a92b"/>
+            </linearGradient>
             <radialGradient id="puff-g">
               <stop offset="0" stop-color="#d9c49a" stop-opacity="0.9"/>
               <stop offset="0.6" stop-color="#9a8863" stop-opacity="0.35"/>
@@ -71,6 +77,7 @@
 
           <rect class="sky sky-night" width="1600" height="900" fill="url(#sky-night)"/>
           <rect class="sky sky-dawn" width="1600" height="900" fill="url(#sky-dawn)" opacity="0"/>
+          <rect class="sky sky-noon" width="1600" height="900" fill="url(#sky-noon)" opacity="0"/>
           <g class="stars" fill="#e8dfcc">
           <circle cx="381" cy="283" r="1.2" opacity="0.95"/>
           <circle cx="758" cy="302" r="0.8" opacity="0.94"/>
@@ -204,7 +211,31 @@
         <div class="scene scene-2" data-scene="2">
           <p class="bio-line">Joe Laredo. Creator aus Bremen –<br>laut, schnell und selbstironisch.</p>
         </div>
-        <div class="scene scene-3" data-scene="3" aria-hidden="true"></div>
+        <div class="scene scene-3" data-scene="3">
+          <div class="noon-light" aria-hidden="true"></div>
+          <!-- Foto: vorerst freigestelltes Porträt. Mit joe2.jpg + scripts/freistellen.py wird es automatisch ersetzt. -->
+          <figure class="noon-joe">
+            <img class="noon-shadow" src="../assets/img/joe-portrait-cutout.webp" alt="" aria-hidden="true">
+            <img class="noon-img" src="../assets/img/joe-portrait-cutout.webp" alt="Joe Laredo">
+          </figure>
+          <article class="wanted" aria-label="Steckbrief Joe Laredo">
+            <div class="wanted-paper">
+              <p class="w-kicker">Steckbrief</p>
+              <p class="w-top">Wanted</p>
+              <h2 class="w-name">Joe Laredo</h2>
+              <dl class="w-facts">
+                <div><dt>Aus</dt><dd>Bremen</dd></div>
+                <div><dt>Look</dt><dd>Denim, Cap, Boots</dd></div>
+                <div><dt>Fährt</dt><dd>Opel Astra F</dd></div>
+                <div><dt>Macht</dt><dd>Club-Vlogs, Sketche, Reels</dd></div>
+                <div><dt>Gesehen auf</dt><dd>@joelaredeo_</dd></div>
+                <div data-followers="joelaredeo_" hidden><dt>Follower</dt><dd></dd></div>
+              </dl>
+              <p class="w-last">Zuletzt gesehen: nachts, in Bremer Clubs.</p>
+              <span class="w-stamp" aria-hidden="true">JOE&amp;PS<br>Bremen</span>
+            </div>
+          </article>
+        </div>
         <div class="scene scene-4" data-scene="4" aria-hidden="true"></div>
         <div class="scene scene-5" data-scene="5" aria-hidden="true"></div>
       </div>
@@ -389,6 +420,7 @@
   <!-- GSAP + ScrollTrigger vom CDN (jsDelivr), mit Prüfsumme gegen Manipulation -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" defer></script>
+  <script src="../assets/js/stats.js" defer></script>
   <script type="module" src="../assets/js/story/story.js"></script>
 </body>
 </html>

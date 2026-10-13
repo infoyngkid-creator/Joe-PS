@@ -1,12 +1,13 @@
-"""Stellt eine Person frei und macht daraus eine dunkle Silhouette mit Lichtkante (transparentes WebP).
+"""Stellt eine Person frei (transparentes WebP) und trägt das Ergebnis in die Story ein.
 
 Aufruf (im Projektordner):
     pip install "rembg[cpu]" pillow
-    python3 scripts/freistellen.py assets/img/joe1.jpg
+    python3 scripts/freistellen.py assets/img/joe1.jpg   # Szene 2: dunkle Silhouette
+    python3 scripts/freistellen.py assets/img/joe2.jpg   # Szene 3: farbig, warm
 
 Ergebnis:
-    assets/img/joe1-cutout.webp      freigestellt, Originalfarben (transparent)
-    assets/img/joe1-silhouette.webp  dunkle Silhouette mit warmer Lichtkante (für die Story)
+    assets/img/NAME-cutout.webp      freigestellt, Farbe (transparent)
+    assets/img/NAME-silhouette.webp  dunkle Silhouette mit warmer Lichtkante
 """
 import sys
 from pathlib import Path
@@ -17,7 +18,7 @@ src = Path(sys.argv[1] if len(sys.argv) > 1 else 'assets/img/joe1.jpg')
 im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
 im.thumbnail((1600, 2400))
 
-cut = remove(im, session=new_session('u2net_human_seg'))
+cut = remove(im, session=new_session('birefnet-portrait'))   # sauberste Kanten, auch bei Haaren
 alpha = cut.getchannel('A').filter(ImageFilter.MedianFilter(5))   # kleine Reste glätten
 alpha = alpha.point(lambda v: 0 if v < 40 else v)
 cut.putalpha(alpha)
@@ -47,8 +48,12 @@ print('fertig:', f'{stem}-cutout.webp', f'{stem}-silhouette.webp', cut.size)
 
 # In der Story eintragen, damit Szene 2 das Foto statt des Platzhalters nimmt
 page = Path('joe-laredo/index.html')
-if page.exists() and src.name == 'joe1.jpg':
+if page.exists() and src.name in ('joe1.jpg', 'joe2.jpg'):
+    import re
     html = page.read_text(encoding='utf-8')
-    html = html.replace('data-photo=""', 'data-photo="../assets/img/joe1-silhouette.webp"', 1)
+    if src.name == 'joe1.jpg':
+        html = html.replace('data-photo=""', 'data-photo="../assets/img/joe1-silhouette.webp"', 1)
+    else:
+        html = html.replace('../assets/img/joe-portrait-cutout.webp', '../assets/img/joe2-cutout.webp')
     page.write_text(html, encoding='utf-8')
     print('eingetragen in', page)
