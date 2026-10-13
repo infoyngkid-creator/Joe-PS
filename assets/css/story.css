@@ -1,0 +1,147 @@
+/* ==========================================================
+   Scroll-Story „Ride Into Town“ (nur /joe-laredo/)
+   Animiert wird ausschließlich transform und opacity.
+   ========================================================== */
+
+.story {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: #06070b;
+}
+
+.story-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* ---------- Landschaft ---------- */
+
+.land {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.land .sun,
+.land .mesa,
+.land .stars,
+.land .sky {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+/* ---------- Szenen ---------- */
+
+.scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scene-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: calc(56px + 9vh) var(--gutter) 0;
+  text-align: center;
+}
+
+.story-title {
+  position: relative;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(3.4rem, 13vw, 12rem);
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--bone);
+  text-shadow: 0 0.04em 0.4em rgba(6, 7, 11, 0.35);
+}
+
+.st-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.st-char {
+  position: relative;
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Staubpartikel (werden per JS aus der echten Buchstabenform erzeugt) */
+.st-dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.st-dust i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  background: var(--bone);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: calc(2.2rem + env(safe-area-inset-bottom));
+  margin: 0;
+  transform: translateX(-50%);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--bone);
+  opacity: 0.8;
+}
+
+.scroll-hint span {
+  display: inline-block;
+  animation: hint-bob 1.8s ease-in-out infinite;
+}
+
+@keyframes hint-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* Ohne GSAP (z. B. offline) oder mit „Bewegung reduzieren“: ruhiges Standbild */
+.story:not(.is-live) .sky-dawn {
+  opacity: 0.55;
+}
+
+.story:not(.is-live) .sun {
+  transform: translateY(-300px);
+}
+
+.story:not(.is-live) .stars {
+  opacity: 0.4;
+}
+
+@media (max-width: 700px) {
+  .scene-1 {
+    padding-top: calc(56px + 12vh);
+  }
+
+  .story-title {
+    font-size: 17vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint {
+    display: none;
+  }
+}

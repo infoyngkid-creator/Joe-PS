@@ -68,7 +68,7 @@ Impressum, Datenschutz und 404 behalten `noindex`.
 
 ```
 index.html              Startseite (Hub): zwei Hälften „Joe Laredo“ / „PSGOTRICH“
-joe-laredo/index.html   Platzhalter für die Scroll-Story + geparkter Rohinhalt (<template id="rohinhalt">)
+joe-laredo/index.html   Scroll-Story „Ride Into Town“ + geparkter Rohinhalt (<template id="rohinhalt">)
 psgotrich/index.html    PSGOTRICH: Porträt + 3D-Chrom-Name
 impressum.html, datenschutz.html, 404.html
 assets/css/base.css     gemeinsames CSS (Farben, Schriften, Animationen, alle Bausteine)
@@ -84,6 +84,25 @@ docs/                   Backend-Plan, Follower-Tool
 
 Alle Pfade sind relativ, damit alles unter `…github.io/Joe-PS/` funktioniert.
 Unterseiten verweisen mit `../` auf `assets/`, `fotos/` usw.
+
+## Scroll-Story „Ride Into Town“ (/joe-laredo/)
+
+- Eine gepinnte Sektion, Scroll = Zeit, 5 Szenen à 1 Bildschirmhöhe Scrollweg.
+- GSAP + ScrollTrigger 3.13 vom CDN (jsDelivr) mit SRI-Prüfsumme. In `datenschutz.html` erwähnt.
+- Landschaft komplett als SVG in `joe-laredo/index.html` (Himmel, Sterne, Sonne, 3 Mesa-Ebenen).
+- Animiert wird nur `transform` und `opacity`.
+
+```
+assets/js/story/story.js           Steuerung: Master-Timeline, Pin, Szenen-Reihenfolge
+assets/js/story/landscape.js       Parallax der Mesa-Ebenen über die ganze Story
+assets/js/story/dust.js            Buchstaben → Staubpartikel (aus der echten Buchstabenform)
+assets/js/story/scene1-sunrise.js  Szene 1: Sonnenaufgang, Name zerfällt zu Staub
+assets/js/story/scene2.js … 5.js   leer, für die nächsten Szenen
+assets/css/story.css               Styles der Story
+```
+
+Neue Szene bauen: in `sceneN.js` die Funktion `build(tl, t0, ctx)` füllen. `t0` ist der Startzeitpunkt der
+Szene auf der Timeline, jede Szene ist 1 Einheit lang.
 
 ## Farben
 
