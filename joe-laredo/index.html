@@ -56,6 +56,18 @@
               <stop offset="0.82" stop-color="#e6a92b"/>
               <stop offset="1" stop-color="#f3cf86"/>
             </linearGradient>
+            <linearGradient id="sky-oxblood" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3a1a1a"/>
+              <stop offset="0.45" stop-color="#7c241d"/>
+              <stop offset="0.8" stop-color="#b8461f"/>
+              <stop offset="1" stop-color="#e07a2a"/>
+            </linearGradient>
+            <linearGradient id="sky-dusk" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#121a28"/>
+              <stop offset="0.5" stop-color="#33465f"/>
+              <stop offset="0.85" stop-color="#5a3a4a"/>
+              <stop offset="1" stop-color="#7c241d"/>
+            </linearGradient>
             <linearGradient id="sky-noon" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#f7ecd3"/>
               <stop offset="0.45" stop-color="#f1d9a4"/>
@@ -78,6 +90,8 @@
           <rect class="sky sky-night" width="1600" height="900" fill="url(#sky-night)"/>
           <rect class="sky sky-dawn" width="1600" height="900" fill="url(#sky-dawn)" opacity="0"/>
           <rect class="sky sky-noon" width="1600" height="900" fill="url(#sky-noon)" opacity="0"/>
+          <rect class="sky sky-oxblood" width="1600" height="900" fill="url(#sky-oxblood)" opacity="0"/>
+          <rect class="sky sky-dusk" width="1600" height="900" fill="url(#sky-dusk)" opacity="0"/>
           <g class="stars" fill="#e8dfcc">
           <circle cx="381" cy="283" r="1.2" opacity="0.95"/>
           <circle cx="758" cy="302" r="0.8" opacity="0.94"/>
@@ -202,6 +216,13 @@
               <path d="M-36.3 11.2 Q0.6 6.6 11.3 -23.5 M12.1 27.9 Q-30.8 -14.9 -33.6 -8.3 M27.0 17.3 Q36.6 35.3 -14.6 -3.7 M-10.3 -14.9 Q2.2 -33.5 13.9 3.7 M5.4 13.8 Q-4.5 26.0 -25.2 6.8 M-26.8 -3.2 Q-3.2 -16.9 26.8 -16.1 M35.8 -0.5 Q-14.0 -20.5 -32.4 -1.1 M-8.2 32.9 Q26.3 -8.6 -24.4 -0.4 M13.5 -3.7 Q31.2 -2.3 -17.0 9.5 M15.8 -2.0 Q21.2 -17.5 -9.0 29.0 M33.4 20.3 Q-29.0 -19.3 -25.1 22.5 M28.0 20.6 Q4.5 -4.0 -7.0 17.3 M6.3 16.2 Q-29.1 -6.0 -23.1 -20.3 M9.1 38.2 Q-14.9 29.2 -34.8 2.2 M8.8 35.1 Q-30.4 37.2 -30.2 -5.2 M7.8 33.2 Q-15.5 -32.4 -22.5 1.9 M17.1 10.9 Q-9.8 -3.6 -29.0 6.2 M28.0 -7.3 Q-24.1 -26.3 -12.2 34.4 M17.2 -11.1 Q18.2 33.5 -12.0 14.6 M12.2 34.9 Q-6.0 -30.1 -10.9 -27.6 M19.6 4.9 Q-18.5 24.6 -31.5 -7.3 M-15.3 -10.6 Q-32.8 -20.6 24.0 -22.3 M-27.9 -10.9 Q31.7 -22.5 21.1 2.9 M25.4 2.7 Q-24.6 -10.0 -4.2 15.0 M-21.0 -10.3 Q36.5 11.9 12.6 -35.0 M-6.4 -16.5 Q-36.6 31.2 13.6 6.2 M-4.4 -13.9 Q-1.4 17.5 9.7 29.0 M-6.7 14.5 Q18.0 30.4 13.3 -24.9 M-2.8 -34.5 Q-11.3 14.1 21.8 30.9 M20.2 -14.5 Q27.6 5.5 -23.5 25.3 M-20.6 -20.6 Q-31.9 10.6 27.6 -11.4 M32.9 -1.4 Q17.9 6.2 -23.5 5.4 M-15.1 5.9 Q-35.7 7.7 26.9 -20.0 M-31.9 3.8 Q8.7 32.0 -0.8 -26.9"/>
             </g>
           </g>
+
+          <!-- Szene 4: Felskante mit Joe als Silhouette (x wird per JS an den sichtbaren Ausschnitt angepasst) -->
+          <g class="ledge" transform="translate(1100 0)">
+            <path fill="#0d0b0a" d="M-80 900 L-62 842 L-40 790 L-28 742 L-6 712 L8 690 L34 682 L120 678 L240 672 L330 676 L420 668 L520 680 L700 694 L700 900 Z"/>
+            <path fill="#1c1715" opacity="0.8" d="M8 690 L34 682 L120 678 L240 672 L330 676 L420 668 L520 680 L520 688 L330 684 L240 680 L120 686 L36 690 Z"/>
+            <image class="ledge-joe" href="../assets/img/joe3-silhouette.webp" x="18" y="379" width="108" height="301"/>
+          </g>
         </svg>
 
         <div class="scene scene-1" data-scene="1">
@@ -236,7 +257,29 @@
             </div>
           </article>
         </div>
-        <div class="scene scene-4" data-scene="4" aria-hidden="true"></div>
+        <div class="scene scene-4" data-scene="4">
+          <h2 class="music-title" aria-label="Music"><span>M</span><span>U</span><span>S</span><span>I</span><span>C</span></h2>
+          <!-- Musik-Player: Status und Streaming-Links kommen aus content/musik.json (im CMS: „Musik“) -->
+          <div class="player" id="musik">
+            <div class="mini-tape" aria-hidden="true">
+              <div class="label">
+                <div class="label-top"><b>Joe Laredo</b><i>A</i></div>
+                <div class="label-lines"><span>Musik</span><span class="mt-status">In Arbeit</span></div>
+                <div class="window">
+                  <div class="reel l"><span></span></div>
+                  <div class="reel r"><span></span></div>
+                </div>
+                <div class="label-foot">Vol. 01 · Bremen</div>
+              </div>
+              <div class="bottom-plate"><i></i><i></i><i></i><i></i></div>
+              <s class="screw s1"></s><s class="screw s2"></s><s class="screw s3"></s><s class="screw s4"></s><s class="screw s5"></s>
+            </div>
+            <div class="player-info">
+              <p class="player-status"><span class="ps-dot" aria-hidden="true"></span><span data-musik-status>In Arbeit.</span></p>
+              <ul class="stream-links" hidden></ul>
+            </div>
+          </div>
+        </div>
         <div class="scene scene-5" data-scene="5" aria-hidden="true"></div>
       </div>
     </section>
@@ -421,6 +464,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous" defer></script>
   <script src="../assets/js/stats.js" defer></script>
+  <script src="../assets/js/musik.js" defer></script>
   <script type="module" src="../assets/js/story/story.js"></script>
 </body>
 </html>

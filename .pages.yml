@@ -47,3 +47,26 @@ content:
           - name: psgotrich_
             label: PSGOTRICH (@psgotrich_)
             type: number
+
+  - name: musik
+    label: Musik (Joe Laredo)
+    type: file
+    path: content/musik.json
+    format: json
+    fields:
+      - name: status
+        label: Status-Text (z. B. „In Arbeit.“ oder „Neue Single draußen.“)
+        type: string
+      - name: links
+        label: Streaming-Links
+        type: object
+        list: true
+        fields:
+          - name: plattform
+            label: Plattform (z. B. Spotify, Apple Music, SoundCloud, YouTube)
+            type: string
+            required: true
+          - name: url
+            label: Link (muss mit https:// anfangen)
+            type: string
+            required: true
