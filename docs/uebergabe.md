@@ -128,7 +128,7 @@ Outfit: dark oxblood-red distressed leather jacket with shirt collar and zipper,
 No visible tattoos, no tank top, no open chest, no rolled sleeves, no bare forearms, no visible hands, no cowboy hat, no full beard, no logos, no text.
 ```
 
-**Status:** Noch **nichts generiert**, 250 Credits vorhanden. Higgsfield-CLI ist auf dem Mac des Kunden eingerichtet (Workspace „Private“). In Cloud-Sitzungen müssen `higgsfield.ai`, `*.higgsfield.ai` und `*.cloudfront.net` in den Netzwerk-Freigaben stehen. Der Claude-Connector „Higgsfield AI“ kann nur lesen, nicht generieren.
+**Status:** Noch **nichts generiert**, 250 Credits vorhanden. Higgsfield-CLI ist auf dem Mac des Kunden eingerichtet (Workspace „Private“). **Generieren nur in einer lokalen Claude-Sitzung auf dem Mac** (siehe Abschnitt 8): Der CLI-Login läuft über Browser-OAuth mit Rückleitung auf `localhost`, das geht in Cloud-Sitzungen nicht. Kunde will über seinen Account arbeiten, **nicht über API-Keys**. Der Claude-Connector „Higgsfield AI“ kann nur lesen, nicht generieren.
 
 ### 5.3 PS-Konzept „After Hours“ (nach Joe)
 
@@ -146,7 +146,7 @@ Für PS werden eigene Referenzfotos und ein eigener Look-Plan gebraucht (gleiche
 
 - **Impressum-Daten.** Danach `noindex` entfernen (Hub, Joe, PS).
 - **Mugshot** für Szene 3 (macht der Kunde selbst), Inhalte für den Steckbrief.
-- **J0-Freigabe**, danach der Rest des Higgsfield-Plans.
+- **J0-Ergebnis freigeben** (Generierung ist freigegeben, siehe Abschnitt 8), danach der Rest des Higgsfield-Plans.
 - Optional: Streaming-Links und Follower-Zahlen über Pages CMS.
 
 ## 7. Arbeitsweise / Testen
@@ -155,3 +155,49 @@ Für PS werden eigene Referenzfotos und ein eigener Look-Plan gebraucht (gleiche
 - **Story-Tests mit Playwright:** jsDelivr ist in der Cloud blockiert. GSAP lokal per `page.route('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/*', …)` aus dem npm-Paket `gsap@3.13.0` ausliefern (gleiche SRI-Prüfsumme). Wegen des Tempolimits nach dem Scrollen 4–6 s warten, bevor der Screenshot kommt.
 - **Freistellen:** `pip install "rembg[cpu]" pillow` → `python3 scripts/freistellen.py <bild>` (Modell birefnet-portrait).
 - **Commits:** Deutsch, beschreibend. Push direkt auf `main`.
+
+## 8. Nächste Sitzung: J0 lokal auf dem Mac (Stand 13.10.2026)
+
+Die letzte Sitzung lief in der Cloud und kam nicht an den Higgsfield-Account. J0 wird deshalb in einer **lokalen** Claude-Code-Sitzung auf dem Mac erledigt (Desktop-App mit Umgebung „Local“ oder `claude` im Terminal im Repo-Ordner).
+
+**Startsatz für die lokale Sitzung:**
+> Lies docs/uebergabe.md, Abschnitt 8, und mach J0.
+
+### 8.1 Entscheidungen des Kunden (schon getroffen, nicht neu fragen)
+
+- **J0 ist freigegeben:** Nano Banana Pro, 2K, 1:1, 2 Credits pro Versuch, **max. 3 Versuche = 6 Credits**. Vor dem ersten Lauf den Preis per CLI gegenprüfen. Weicht er ab, erst fragen.
+- **Abrechnung über den Account des Kunden** (CLI-Login, Workspace „Private“), **keine API-Keys**.
+- **Festes Outfit aus 5.1** gilt, auch das **kleine silberne Kreuz** an der Kugelkette. Auf allen Referenzbildern trägt Joe stattdessen eine Erkennungsmarke (Dog Tag). Die darf **nicht** übernommen werden.
+- Prompt J0 aus 5.2 **wörtlich** verwenden. Zur Sicherheit am Ende ergänzen: `No dog tag, no military tag pendant, only a small silver cross.`
+
+### 8.2 Referenzbilder (liegen auf dem Mac, nicht ins Repo)
+
+Geprüft in der letzten Sitzung:
+
+| Bild | Verwenden? | Wofür / Achtung |
+|---|---|---|
+| Echtes Foto: Selfie mit Pilotenbrille, weißes T-Shirt, Kopfhörer, graue Wand | **ja** | Gesicht (Lippen, Nase, Bart, Stirnrunzeln), Haare nass zurück. Kopfhörer und Brille sollen nicht übernommen werden. |
+| Echtes Foto: Spiegel-Selfie, nasse Haare, ohne Shirt | **ja** | Gesicht und Haare. Zeigt große Tattoos (Blitz-/Ast-Motiv Brust/Schulter, Unterarm). Wenn möglich nur einen Ausschnitt Kopf/Hals hochladen. |
+| KI-Sheet 2×2 ohne Shirt, schwarze Jeans | **ja** | Körperbau schlank-athletisch. Zeigt Tattoos und Dog Tag, deshalb die Negativ-Anweisungen im Prompt nicht weglassen. |
+| KI-Sheet 2×2 mit brauner Lederjacke | **nein** | zu massig, Jacke offen, braun statt Oxblood, große Schnalle. |
+| College-Jacke frontal, Cap-Selfie | optional | wurden nicht gesichtet; falls vorhanden, als zusätzliche Gesichtsreferenz. |
+
+Notiz des Kunden zu den KI-Sheets: nicht 1:1, Gesicht ca. 70–80 % richtig, Rest ca. 90 %. Echte Fotos haben beim Gesicht Vorrang.
+
+### 8.3 Ablauf
+
+1. `higgsfield account` → Credits prüfen (Erwartung: 250) und Workspace „Private“ (`higgsfield workspace`).
+2. `higgsfield model list` → genaue Modell-ID von **Nano Banana Pro** und die Parameter für Auflösung 2K und Seitenverhältnis 1:1 heraussuchen (`higgsfield model --help`).
+3. Referenzbilder hochladen: `higgsfield upload …`. Pfade beim Kunden erfragen (Desktop-Ordner `ref` und `zusatz`), die Upload-IDs notieren.
+4. Kosten prüfen: `higgsfield generate cost <modell> …`. Nur weitermachen, wenn das ≤ 2 Credits pro Lauf sind.
+5. Generieren: `higgsfield generate create <modell> --prompt "<Prompt J0 + Zusatz>" --image <upload_id> …` (alle Referenz-IDs), dann `higgsfield generate wait …`.
+6. Ergebnis außerhalb des Repos speichern (z. B. `~/Desktop/joe-ps-gen/J0-v1.png`) und dem Kunden zeigen.
+7. Gegen 5.1 prüfen: Gesicht, Haare, Oxblood-Jacke halb zu, weißes Rundhals-Shirt, **Kreuz statt Dog Tag**, helle 501, Messing-Western-Schnalle, wheat-farbene Boots, Hände verdeckt, **keine Tattoos**, keine Logos/Schrift, 4 Panels korrekt.
+8. Bei Fehlern den Prompt gezielt nachschärfen und erneut generieren, insgesamt **höchstens 3 Läufe**. Danach stoppen und den Kunden fragen.
+9. Nach der Freigabe durch den Kunden: Status in 5.2 und Abschnitt 6 aktualisieren, Credit-Stand eintragen, committen. Generierte Bilder **nicht** ins Repo, solange sie nicht für die Seite gebraucht werden. Dann weiter mit **L1** (Preis nennen und Freigabe einholen, 4 Credits pro Versuch).
+
+### 8.4 Hinweise
+
+- Port 8765 ist durch den CLI-Login belegt. Für den lokalen Testserver einen anderen Port nehmen.
+- Kurze Antworten auf Deutsch, Screenshots bzw. Ergebnisbilder zeigen.
+- Niemals Tokens oder Login-Daten ausgeben oder ins Repo schreiben (`higgsfield auth token` nicht benutzen).
