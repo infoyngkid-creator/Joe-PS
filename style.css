@@ -26,6 +26,15 @@
   --muted: #8d8d93;
   --line: rgba(255, 255, 255, 0.12);
   --paper: #e9e5dc;
+  /* JOELAREDO: warm – Denim, Leder, Whiskey, Creme */
+  --joe-bone: #efe4cf;
+  --joe-tan: #c99a62;
+  --joe-rust: #8a4b2a;
+  --joe-glow: rgba(214, 150, 80, 0.2);
+  /* PSGOTRICH: kalt – Chrom, Eis, Schwarz */
+  --ps-chrome: #eef3f9;
+  --ps-steel: #8fa1b8;
+  --ps-glow: rgba(150, 185, 235, 0.18);
   --max: 1240px;
   --gutter: 16px;
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
@@ -261,18 +270,37 @@ a {
   line-height: 0.82;
   letter-spacing: -0.03em;
   color: #fff;
-  background-image:
-    linear-gradient(105deg, transparent 40%, #fff 50%, transparent 60%),
-    linear-gradient(180deg, #ffffff 0%, #c9c9ce 100%);
+  animation: rise 1.2s var(--ease) both;
+}
+
+.name > span {
   background-size: 250% 100%, 100% 100%;
   background-repeat: no-repeat;
   background-position: 160% 0, 0 0;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation:
-    rise 1.2s var(--ease) both,
-    shine 7s ease-in-out 1.5s infinite;
+  animation: shine 7s ease-in-out 1.5s infinite;
+}
+
+/* JOE warm (Creme, Tabak), PS kalt (Chrom) */
+.name .n-joe {
+  background-image:
+    linear-gradient(105deg, transparent 40%, #fff6e6 50%, transparent 60%),
+    linear-gradient(180deg, #f6eddc 0%, var(--joe-bone) 45%, #b99a74 100%);
+}
+
+.name .n-ps {
+  background-image:
+    linear-gradient(105deg, transparent 40%, #ffffff 50%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, var(--ps-chrome) 45%, #8d9db2 100%);
+  animation-delay: 2.1s;
+}
+
+.name .n-x {
+  font-weight: 300;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.35);
+  animation: none;
 }
 
 @keyframes rise {
@@ -589,6 +617,21 @@ a {
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
 }
 
+.name3d .ch {
+  position: relative;
+  display: inline-block;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tone-warm .name3d {
+  color: var(--joe-bone);
+}
+
+.tone-cold .name3d {
+  color: var(--ps-chrome);
+}
+
 /* Tiefen-Ebenen (per JS erzeugt) */
 .name3d .layer {
   position: absolute;
@@ -596,6 +639,38 @@ a {
   top: 0;
   color: var(--c);
   transform: translateZ(var(--z));
+}
+
+.spec {
+  display: flex;
+  gap: 0.6rem 2rem;
+  margin: 1.4rem 0 0;
+  font-size: 0.95rem;
+}
+
+.spec div {
+  display: grid;
+  gap: 0.1rem;
+  text-align: center;
+}
+
+.spec dt {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.spec dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.tone-warm .spec dd {
+  color: var(--joe-bone);
+}
+
+.tone-cold .spec dd {
+  color: var(--ps-chrome);
 }
 
 .handles {
@@ -635,6 +710,30 @@ a {
 
 .scrolly .member.is-active {
   visibility: visible;
+}
+
+/* Licht hinter den Porträts: warm bei Joe, kalt bei PS */
+.scrolly .duo-scene .stage::before,
+.scrolly .duo-scene .stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease);
+  pointer-events: none;
+}
+
+.scrolly .duo-scene .stage::before {
+  background: radial-gradient(60% 50% at 50% 42%, var(--joe-glow), transparent 70%);
+}
+
+.scrolly .duo-scene .stage::after {
+  background: radial-gradient(60% 50% at 50% 42%, var(--ps-glow), transparent 70%);
+}
+
+.duo-scene[data-tone="warm"] .stage::before,
+.duo-scene[data-tone="cold"] .stage::after {
+  opacity: 1;
 }
 
 /* ---------- Kassette ---------- */
@@ -679,6 +778,29 @@ a {
   font-size: clamp(1.3rem, 3vw, 1.9rem);
   color: rgba(255, 255, 255, 0.3);
   transition: color 0.4s var(--ease);
+}
+
+.tracks li div {
+  display: grid;
+}
+
+.tracks li small {
+  max-height: 0;
+  overflow: hidden;
+  font-family: "Figtree", system-ui, sans-serif;
+  font-stretch: 100%;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+  opacity: 0;
+  transition: max-height 0.5s var(--ease), opacity 0.5s var(--ease), margin 0.5s var(--ease);
+}
+
+.tracks li.is-on small,
+.no-scrolly .tracks li small {
+  max-height: 3em;
+  margin-top: 0.3rem;
+  opacity: 1;
 }
 
 .tracks li span {
@@ -996,6 +1118,64 @@ a {
   }
 }
 
+/* ---------- Termine ---------- */
+
+.dates {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.dates li {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr auto;
+  gap: 0.3rem 1.5rem;
+  align-items: baseline;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.d-date {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--muted);
+}
+
+.d-club {
+  font-family: var(--display);
+  font-stretch: 75%;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  line-height: 1.05;
+}
+
+.d-city {
+  grid-column: 2;
+  color: var(--muted);
+}
+
+.d-link {
+  grid-column: 3;
+  grid-row: 1;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .dates li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .d-date,
+  .d-club,
+  .d-city {
+    grid-column: 1;
+  }
+
+  .d-link {
+    grid-column: 2;
+  }
+}
+
 /* ---------- Booking ---------- */
 
 .big-title {
@@ -1170,4 +1350,8 @@ a {
 
 .reel.r span {
   transform: rotate(calc(var(--spin, 0deg) * 1.7));
+}
+
+.scrolly .member {
+  z-index: 1;
 }

@@ -17,7 +17,27 @@ Datei auf GitHub öffnen → Stift-Symbol → ändern → „Commit changes“. 
 | Booking-E-Mail (Platzhalter `booking@example.com`) | `index.html`, 3 Stellen – per Suchen & Ersetzen |
 | Social-Links | `index.html`: Abschnitt „Die zwei“, Footer und JSON-LD (`sameAs`) |
 | Impressum (Platzhalter in `[ECKIGEN KLAMMERN]`) | `impressum.html` und `datenschutz.html` (Abschnitt „Verantwortlicher“) |
-| Farben | `style.css`, ganz oben in `:root` |
+| Farben | `style.css`, ganz oben in `:root` (`--joe-…` warm, `--ps-…` kalt) |
+| Zeilen pro Person (Look, Fährt, Follower) | `index.html`, Abschnitt „Die zwei“, Liste `spec` |
+
+## Termine eintragen
+
+Datei `content/termine.json` auf GitHub öffnen → Stift-Symbol → Termine eintragen → Commit. Beispiel:
+
+```json
+{
+  "termine": [
+    { "datum": "2026-11-14", "club": "Name des Clubs", "stadt": "Bremen", "link": "https://…" }
+  ]
+}
+```
+
+`link` ist optional und muss mit `https://` anfangen. Vergangene Termine verschwinden automatisch.
+Ist die Liste leer, wird der Abschnitt „Termine“ nicht angezeigt.
+
+## Backend / Sicherheit
+
+Der Plan für ein sicheres Backend (Inhalte selbst pflegen, Termine) steht in `docs/backend-plan.md`.
 
 ## Ersten YouTube-Vlog einbinden
 
@@ -39,6 +59,9 @@ Impressum, Datenschutz und 404 behalten `noindex`.
 - `main.js` – Scroll-Effekte (3D-Namen, Kassette, Parallax, Porträt-Glitch) und YouTube-Klick-zum-Laden
 - `fluid.js` – Flüssigkeits-Effekt im Hero (WebGL, reagiert auf Maus/Finger)
 - `ascii.js` – ASCII-Darstellung des Pressefotos mit Lupe
+- `termine.js` – zeigt Termine aus `content/termine.json` an (sicher, nur als Text)
+- `content/` – Inhalte als Dateien (Vorbereitung fürs Backend)
+- `docs/backend-plan.md` – Backend-Plan
 - `fotos/` – Fotos (ohne Metadaten, als JPG und WebP). Neues Foto: Datei mit gleichem Namen ersetzen
 - `fonts/` – Archivo (Überschriften) und Figtree (Text), lokal, WOFF2, Lizenz: SIL Open Font License, siehe `OFL-*.txt`)
 - `robots.txt`, `sitemap.xml` – für Suchmaschinen

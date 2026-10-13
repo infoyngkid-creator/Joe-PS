@@ -2,6 +2,8 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>JOE x PS – Club-Vlogs aus Bremen</title>
   <meta name="description" content="JOE x PS sind JOELAREDO und PSGOTRICH aus Bremen: Club-Vlogs, Sketche und Reels. Press Kit und Booking für Clubs und Events.">
@@ -75,7 +77,7 @@
       <canvas class="fluid" aria-hidden="true"></canvas>
       <div class="wrap hero-inner">
         <p class="kicker intro" style="--d: 0s"><span data-scramble>Bremen</span></p>
-        <h1 class="name">JOE x PS</h1>
+        <h1 class="name"><span class="n-joe">JOE</span> <span class="n-x">x</span> <span class="n-ps">PS</span></h1>
         <p class="lead intro" style="--d: 0.25s">JOELAREDO und PSGOTRICH.<br>Club-Vlogs, Sketche, Reels.</p>
         <div class="actions intro" style="--d: 0.4s">
           <!-- PLATZHALTER: booking@example.com durch die echte Booking-E-Mail ersetzen (auch weiter unten) -->
@@ -116,7 +118,7 @@
     <!-- ===== Die zwei: 3D-Namen ===== -->
     <section class="duo-scene" id="duo" aria-label="Die zwei">
       <div class="stage">
-        <article class="member" data-member>
+        <article class="member tone-warm" data-member>
           <div class="portrait">
             <picture>
               <source type="image/webp" srcset="fotos/joe-400.webp">
@@ -127,13 +129,18 @@
           <div class="name-wrap">
             <h2 class="name3d" data-3d>JOELAREDO</h2>
           </div>
+          <dl class="spec">
+            <div><dt>Look</dt><dd>Denim, Cap, Boots</dd></div>
+            <div><dt>Fährt</dt><dd>Opel Astra F</dd></div>
+            <!-- Follower-Zahl ergänzen: <div><dt>Instagram</dt><dd>3.200</dd></div> -->
+          </dl>
           <p class="handles">
             <a href="https://www.instagram.com/joelaredo_/" rel="me noopener">Instagram</a>
             <a href="https://www.tiktok.com/@joelaredo_" rel="me noopener">TikTok</a>
           </p>
         </article>
 
-        <article class="member" data-member>
+        <article class="member tone-cold" data-member>
           <div class="portrait">
             <picture>
               <source type="image/webp" srcset="fotos/ps-600.webp 600w, fotos/ps-960.webp 960w" sizes="(max-width: 700px) 70vw, 440px">
@@ -144,6 +151,11 @@
           <div class="name-wrap">
             <h2 class="name3d" data-3d>PSGOTRICH</h2>
           </div>
+          <dl class="spec">
+            <div><dt>Look</dt><dd>Chains, Tattoos, Schwarz</dd></div>
+            <div><dt>Fährt</dt><dd>BMW</dd></div>
+            <!-- Follower-Zahl ergänzen: <div><dt>Instagram</dt><dd>3.200</dd></div> -->
+          </dl>
           <p class="handles">
             <a href="https://www.instagram.com/psgotrich/" rel="me noopener">Instagram</a>
             <a href="https://www.tiktok.com/@psgotrich" rel="me noopener">TikTok</a>
@@ -158,10 +170,10 @@
         <div class="tape-copy">
           <h2 id="tape-title">Vol. 01</h2>
           <ol class="tracks">
-            <li data-side="a"><span>A1</span> Club-Vlogs</li>
-            <li data-side="a"><span>A2</span> Sketche</li>
-            <li data-side="b"><span>B1</span> Reels</li>
-            <li data-side="b"><span>B2</span> Live im Club</li>
+            <li data-side="a"><span>A1</span><div>Club-Vlogs<small>Jedes Wochenende ein anderer Club.</small></div></li>
+            <li data-side="a"><span>A2</span><div>Sketche<small>Kurz und trocken, unter der Woche.</small></div></li>
+            <li data-side="b"><span>B1</span><div>Reels<small>Clips aus der Nacht, für Instagram und TikTok.</small></div></li>
+            <li data-side="b"><span>B2</span><div>Live im Club<small>Bucht uns für euren Abend.</small></div></li>
           </ol>
         </div>
 
@@ -200,6 +212,14 @@
           </div>
           <div class="tape-shadow"></div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===== Termine (kommen aus content/termine.json) ===== -->
+    <section class="block termine" id="termine" aria-labelledby="termine-title" hidden>
+      <div class="wrap">
+        <h2 id="termine-title" class="big-title" data-reveal>Termine</h2>
+        <ol class="dates" data-reveal></ol>
       </div>
     </section>
 
@@ -242,5 +262,6 @@
   <script src="main.js" defer></script>
   <script src="fluid.js" defer></script>
   <script src="ascii.js" defer></script>
+  <script src="termine.js" defer></script>
 </body>
 </html>

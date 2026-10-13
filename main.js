@@ -46,21 +46,43 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- 3D-Namen: Tiefe aus gestapelten Ebenen ---------- */
+  /* ---------- 3D-Namen: jeder Buchstabe mit eigener Tiefe ---------- */
 
   document.querySelectorAll('[data-3d]').forEach(function (h) {
-    var text = h.textContent;
-    var n = small ? 10 : 18;
-    for (var i = n; i >= 1; i--) {
-      var t = i / n;
-      var s = document.createElement('span');
-      s.className = 'layer';
-      s.setAttribute('aria-hidden', 'true');
-      s.textContent = text;
-      s.style.setProperty('--z', (-i * (small ? 0.016 : 0.011)).toFixed(4) + 'em');
-      s.style.setProperty('--c', 'hsl(220, 5%, ' + (60 - t * 48).toFixed(1) + '%)');
-      h.appendChild(s);
-    }
+    var text = h.textContent.trim();
+    var warm = !!h.closest('.tone-warm');
+    var n = small ? 12 : 14;
+    h.setAttribute('aria-label', text);
+    h.textContent = '';
+    h._chars = [];
+    text.split('').forEach(function (letter) {
+      var c = document.createElement('span');
+      c.className = 'ch';
+      c.setAttribute('aria-hidden', 'true');
+      c.appendChild(document.createTextNode(letter));
+      for (var i = n; i >= 1; i--) {
+        var t = i / n;
+        var l = document.createElement('span');
+        l.className = 'layer';
+        l.textContent = letter;
+        l.style.setProperty('--z', (-i * 0.013).toFixed(4) + 'em');
+        l.style.setProperty('--c', warm
+          ? 'hsl(30, 28%, ' + (52 - t * 42).toFixed(1) + '%)'
+          : 'hsl(214, 14%, ' + (58 - t * 48).toFixed(1) + '%)');
+        c.appendChild(l);
+      }
+      /* Zufällige Flugbahn für das Zerlegen */
+      c._v = {
+        x: (Math.random() - 0.5) * 2.4,
+        y: (Math.random() - 0.5) * 2.2,
+        z: 2 + Math.random() * 5,
+        rx: (Math.random() - 0.5) * 220,
+        ry: (Math.random() - 0.5) * 260,
+        rz: (Math.random() - 0.5) * 90
+      };
+      h.appendChild(c);
+      h._chars.push(c);
+    });
   });
 
   /* ---------- Porträts: ASCII-Ebene für den Glitch ---------- */
@@ -187,16 +209,29 @@
         if (o > 0.01) {
           if (current < 0 || o > 0.5) current = i;
           var x = q * 2 - 1;
-          var ry = (x < 0 ? -1 : 1) * Math.pow(Math.abs(x), 1.7) * 78;
           var name = m.querySelector('.name3d');
-          name.style.setProperty('--ry', ry.toFixed(2) + 'deg');
-          name.style.setProperty('--rx', (x * -16).toFixed(2) + 'deg');
+          name.style.setProperty('--ry', (x * 30).toFixed(2) + 'deg');
+          name.style.setProperty('--rx', (x * -10).toFixed(2) + 'deg');
+          /* Buchstaben fliegen rein, stehen, fliegen wieder auseinander */
+          var sc = (1 - ease(clamp(q / 0.4, 0, 1))) + ease(clamp((q - 0.64) / 0.36, 0, 1));
+          var chars = name._chars || [];
+          for (var c = 0; c < chars.length; c++) {
+            var v = chars[c]._v;
+            chars[c].style.transform = sc < 0.001 ? '' :
+              'translate3d(' + (v.x * sc).toFixed(3) + 'em,' + (v.y * sc).toFixed(3) + 'em,' + (v.z * sc).toFixed(3) + 'em) ' +
+              'rotateX(' + (v.rx * sc).toFixed(1) + 'deg) rotateY(' + (v.ry * sc).toFixed(1) + 'deg) rotateZ(' + (v.rz * sc).toFixed(1) + 'deg)';
+          }
+          var spec = m.querySelector('.spec');
+          if (spec) spec.style.opacity = (1 - Math.min(1, sc * 2.2)).toFixed(3);
           m.querySelector('.portrait').style.setProperty('--s', (1.14 - 0.14 * ease(clamp(q / 0.45, 0, 1))).toFixed(3));
         }
         m.classList.toggle('is-active', o > 0.01);
       }
       if (current !== activeMember) {
-        if (current >= 0) glitch(members[current].querySelector('.portrait'));
+        if (current >= 0) {
+          glitch(members[current].querySelector('.portrait'));
+          duo.dataset.tone = members[current].classList.contains('tone-warm') ? 'warm' : 'cold';
+        }
         activeMember = current;
       }
     }
