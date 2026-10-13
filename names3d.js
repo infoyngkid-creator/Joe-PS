@@ -242,7 +242,7 @@ async function start() {
     groups.forEach((g, i) => {
       const raw = p * n - i;
       const q = clamp(raw, 0, 1);
-      const inRange = raw >= 0 && raw <= 1;
+      const inRange = raw >= -0.1 && raw <= 1.1;
       /* Erster Name startet fertig, letzter endet fertig – zerlegt wird nur beim Wechsel */
       const sIn = i === 0 ? 0 : 1 - ease(clamp(q / 0.42, 0, 1));
       const sOut = i === n - 1 ? 0 : easeIn(clamp((q - 0.58) / 0.42, 0, 1));

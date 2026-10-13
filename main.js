@@ -161,9 +161,10 @@
         var m = members[i];
         var raw = p * n - i;
         var q = clamp(raw, 0, 1);
-        var inRange = raw >= 0 && raw <= 1;
-        var fadeIn = i === 0 ? 1 : clamp(q / 0.16, 0, 1);
-        var fadeOut = i === n - 1 ? 1 : clamp((1 - q) / 0.16, 0, 1);
+        /* leichte Überlappung, damit beim Wechsel kein leeres Bild entsteht */
+        var inRange = raw >= -0.1 && raw <= 1.1;
+        var fadeIn = i === 0 ? 1 : clamp((raw + 0.1) / 0.2, 0, 1);
+        var fadeOut = i === n - 1 ? 1 : clamp((1.1 - raw) / 0.2, 0, 1);
         var o = inRange ? Math.min(fadeIn, fadeOut) : 0;
         m.style.setProperty('--o', o.toFixed(3));
         if (o > 0.01) {

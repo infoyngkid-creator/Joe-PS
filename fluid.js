@@ -375,7 +375,7 @@
 
   function randomSplats(n) {
     for (var i = 0; i < n; i++) {
-      splat(Math.random(), Math.random() * 0.8 + 0.1, (Math.random() - 0.5) * 1200, (Math.random() - 0.5) * 1200, tint(3));
+      splat(Math.random(), Math.random() * 0.8 + 0.1, (Math.random() - 0.5) * 1200, (Math.random() - 0.5) * 1200, tint(small ? 0.9 : 3));
     }
   }
 
@@ -413,7 +413,7 @@
     lastScroll = y;
     if (!visible || Math.abs(d) < 2) return;
     var x = 0.15 + Math.random() * 0.7;
-    splat(x, 0.2 + Math.random() * 0.6, (Math.random() - 0.5) * 300, d * 25, tint(1.4));
+    splat(x, 0.2 + Math.random() * 0.6, (Math.random() - 0.5) * 300, d * 25, tint(small ? 0.5 : 1.4));
   }, { passive: true });
 
   /* ---------- Schleife (pausiert, wenn Hero nicht sichtbar) ---------- */
