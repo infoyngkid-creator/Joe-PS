@@ -73,6 +73,8 @@ Impressum, Datenschutz und 404 behalten `noindex`.
 - `main.js` – Scroll-Effekte (3D-Namen, Kassette, Parallax, Porträt-Glitch) und YouTube-Klick-zum-Laden
 - `fluid.js` – Flüssigkeits-Effekt im Hero (WebGL, reagiert auf Maus/Finger)
 - `ascii.js` – ASCII-Darstellung des Pressefotos mit Lupe
+- `names3d.js` – echte 3D-Namen (WebGL, Messing/Chrom). Ohne WebGL bleibt normale Schrift stehen
+- `vendor/three/` – three.js (MIT-Lizenz) und die Schrift Archivo als 3D-Schriftdatei, alles lokal
 - `stats.js` – zeigt Follower aus `content/stats.json`
 - `scripts/update-followers.mjs`, `.github/workflows/follower.yml` – Follower-Tool
 - `.pages.yml` – Konfiguration Pages CMS

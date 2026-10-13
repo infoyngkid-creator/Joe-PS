@@ -46,49 +46,6 @@
     items.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- 3D-Namen: jeder Buchstabe mit eigener Tiefe ---------- */
-
-  document.querySelectorAll('[data-3d]').forEach(function (h) {
-    var text = h.textContent.trim();
-    var warm = !!h.closest('.tone-warm');
-    var n = small ? 12 : 14;
-    h.setAttribute('aria-label', text);
-    h.textContent = '';
-    h._chars = [];
-    var letters = text.split('');
-    var mid = (letters.length - 1) / 2;
-    letters.forEach(function (letter, idx) {
-      var c = document.createElement('span');
-      c.className = 'ch';
-      c.setAttribute('aria-hidden', 'true');
-      c.appendChild(document.createTextNode(letter));
-      for (var i = n; i >= 1; i--) {
-        var t = i / n;
-        var l = document.createElement('span');
-        l.className = 'layer';
-        l.textContent = letter;
-        l.style.setProperty('--z', (-i * 0.013).toFixed(4) + 'em');
-        l.style.setProperty('--c', warm
-          ? 'hsl(30, 28%, ' + (52 - t * 42).toFixed(1) + '%)'
-          : 'hsl(214, 14%, ' + (58 - t * 48).toFixed(1) + '%)');
-        c.appendChild(l);
-      }
-      /* Flugbahn: jeder Buchstabe fliegt von seiner Position nach außen, bis aus dem Bild */
-      var side = mid ? (idx - mid) / mid : 0;
-      var up = Math.random() < 0.5 ? -1 : 1;
-      c._v = {
-        x: side * (3.2 + Math.random() * 2.2) + (Math.random() - 0.5) * 1.2,
-        y: up * (2.4 + Math.random() * 2.4),
-        z: -1.5 + Math.random() * 4,
-        rx: (Math.random() - 0.5) * 320,
-        ry: (Math.random() - 0.5) * 360,
-        rz: (Math.random() - 0.5) * 140
-      };
-      h.appendChild(c);
-      h._chars.push(c);
-    });
-  });
-
   /* ---------- Porträts: ASCII-Ebene für den Glitch ---------- */
 
   var RAMP = ' .:-=+*#%@';
@@ -129,11 +86,9 @@
 
   function glitch(portrait) {
     if (reduce) return;
-    portrait.classList.remove('glitch');
+    portrait.classList.remove('reveal');
     void portrait.offsetWidth;
-    portrait.classList.add('glitch');
-    clearTimeout(portrait._g);
-    portrait._g = setTimeout(function () { portrait.classList.remove('glitch'); }, 800);
+    portrait.classList.add('reveal');
   }
 
   var portraits = document.querySelectorAll('.portrait');
@@ -197,39 +152,27 @@
       }
     }
 
-    /* Die zwei: Namen drehen sich in 3D */
+    /* Die zwei: gleiche Regeln wie names3d.js – erster Name startet fertig, letzter endet fertig */
     if (duo && members.length) {
       var p = sceneProgress(duo);
       var n = members.length;
       var current = -1;
       for (var i = 0; i < n; i++) {
         var m = members[i];
-        var q = clamp(p * n - i, 0, 1);
-        var inRange = p * n - i >= 0 && p * n - i <= 1;
-        var fadeIn = i === 0 ? 1 : clamp(q / 0.14, 0, 1);
-        var fadeOut = i === n - 1 ? 1 : clamp((1 - q) / 0.14, 0, 1);
+        var raw = p * n - i;
+        var q = clamp(raw, 0, 1);
+        var inRange = raw >= 0 && raw <= 1;
+        var fadeIn = i === 0 ? 1 : clamp(q / 0.16, 0, 1);
+        var fadeOut = i === n - 1 ? 1 : clamp((1 - q) / 0.16, 0, 1);
         var o = inRange ? Math.min(fadeIn, fadeOut) : 0;
         m.style.setProperty('--o', o.toFixed(3));
         if (o > 0.01) {
           if (current < 0 || o > 0.5) current = i;
-          var x = q * 2 - 1;
-          var name = m.querySelector('.name3d');
-          name.style.setProperty('--ry', (x * 30).toFixed(2) + 'deg');
-          name.style.setProperty('--rx', (x * -10).toFixed(2) + 'deg');
-          /* Buchstaben fliegen rein, stehen, fliegen wieder auseinander */
-          var sc = (1 - ease(clamp(q / 0.4, 0, 1))) + ease(clamp((q - 0.64) / 0.36, 0, 1));
-          var chars = name._chars || [];
-          for (var c = 0; c < chars.length; c++) {
-            var v = chars[c]._v;
-            chars[c].style.transform = sc < 0.001 ? '' :
-              'translate3d(' + (v.x * sc).toFixed(3) + 'em,' + (v.y * sc).toFixed(3) + 'em,' + (v.z * sc).toFixed(3) + 'em) ' +
-              'rotateX(' + (v.rx * sc).toFixed(1) + 'deg) rotateY(' + (v.ry * sc).toFixed(1) + 'deg) rotateZ(' + (v.rz * sc).toFixed(1) + 'deg)';
-          }
-          /* ganz außen zusätzlich ausblenden (an der Hülle, damit die 3D-Tiefe bleibt) */
-          m.querySelector('.name-wrap').style.opacity = (1 - Math.pow(sc, 3)).toFixed(3);
-          var spec = m.querySelector('.spec');
-          if (spec) spec.style.opacity = (1 - Math.min(1, sc * 2.2)).toFixed(3);
-          m.querySelector('.portrait').style.setProperty('--s', (1.14 - 0.14 * ease(clamp(q / 0.45, 0, 1))).toFixed(3));
+          var sIn = i === 0 ? 0 : 1 - ease(clamp(q / 0.42, 0, 1));
+          var sOut = i === n - 1 ? 0 : Math.pow(clamp((q - 0.58) / 0.42, 0, 1), 3);
+          var sc = Math.max(sIn, sOut);
+          m.style.setProperty('--sc', sc.toFixed(3));
+          m.querySelector('.portrait').style.setProperty('--s', (1.08 - 0.08 * ease(clamp(q / 0.5, 0, 1))).toFixed(3));
         }
         m.classList.toggle('is-active', o > 0.01);
       }
