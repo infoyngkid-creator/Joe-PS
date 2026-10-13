@@ -45,7 +45,7 @@ export default {
     tl.fromTo(letters, { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.14, stagger: 0.03, ease: 'power3.out' }, t0 + 0.42);
 
     /* Player blendet ein, die Spulen der Kassette laufen beim Scrollen */
-    tl.fromTo(player, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.14, ease: 'power2.out' }, t0 + 0.58);
+    tl.fromTo(player, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.14, ease: 'power2.out' }, t0 + 0.58);
     tl.fromTo(tape, { '--spin': '0deg' }, { '--spin': '900deg', duration: 0.42, ease: 'none' }, t0 + 0.58);
   },
 

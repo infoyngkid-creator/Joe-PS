@@ -100,7 +100,7 @@ assets/js/story/scene1-sunrise.js  Szene 1: Sonnenaufgang, Name zerfällt zu Sta
 assets/js/story/scene2.js          Szene 2: The Ride (Läufer, Parallax, Bodenstaub, Bio-Satz, Tumbleweed)
 assets/js/story/scene3.js          Szene 3: High Noon (Mittagslicht, Zoom auf Joe, harter Schatten, Steckbrief)
 assets/js/story/scene4.js          Szene 4: Sundown (Oxblood → Dusk Blue, Silhouette auf Felskante, MUSIC + Player)
-assets/js/story/scene5.js          leer, für die letzte Szene
+assets/js/story/scene5.js          Szene 5: Campfire (Nacht, Sterne funkeln, Lagerfeuer, Booking + Socials, Zurück zum Start)
 assets/css/story.css               Styles der Story
 ```
 
@@ -121,6 +121,9 @@ Steckbrief-Texte: in `joe-laredo/index.html` im Block `class="wanted"`.
 Musik (Szene 4): Status-Text und Streaming-Links stehen in `content/musik.json` und sind im Pages CMS
 unter „Musik (Joe Laredo)“ editierbar. Leere Liste = nur Status („In Arbeit.“). Links nur mit `https://`.
 Silhouette auf der Felskante: `assets/img/joe3-silhouette.webp` (aus dem Diner-Foto, Hand im Gesicht).
+
+Booking-Block am Ende (Szene 5): in `joe-laredo/index.html` im Block `class="campfire-end"`.
+Flackern, Funken, Sternefunkeln und Sternschnuppe laufen per CSS (`story.css`, Abschnitt „Szene 5“).
 
 Neue Szene bauen: in `sceneN.js` die Funktion `build(tl, t0, ctx)` füllen. `t0` ist der Startzeitpunkt der
 Szene auf der Timeline, jede Szene ist 1 Einheit lang.
