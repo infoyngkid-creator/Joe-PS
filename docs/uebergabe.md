@@ -1,23 +1,26 @@
 # Übergabe: JOE&PS Website
 
-Stand: 13.10.2026. Dieses Dokument reicht, um das Projekt in einer neuen Sitzung ohne Vorwissen weiterzuführen.
+Stand: 13.10.2026. Mit diesem Dokument kann eine neue Sitzung die Website ohne Vorwissen weiterbauen.
 
-## 1. Projekt in einem Absatz
+## 1. Projekt
 
 Statische Website (GitHub Pages, kein Build) für das Creator-Duo **JOE&PS** aus Bremen: **Joe Laredo** (Instagram/TikTok `@joelaredeo_`) und **PSGOTRICH** (`@psgotrich_`). Positionierung: **EPK / Press Kit für öffentliche Personen** (Presse, Brands, Events), nicht nur Clubs. Booking-Mail: `con.joe-laredo@outlook.de`.
 
-- Repo: `infoyngkid-creator/Joe-PS`, Branch `main` (Push auf `main` = live nach ca. 1 Minute)
-- Live: https://infoyngkid-creator.github.io/Joe-PS/ · `/joe-laredo/` · `/psgotrich/`
+- Repo `infoyngkid-creator/Joe-PS`, Branch `main`. Ein Push ist nach ca. 1 Minute live.
+- Live-Adressen:
+  - https://infoyngkid-creator.github.io/Joe-PS/
+  - …/joe-laredo/
+  - …/psgotrich/
 
-## 2. Feste Regeln des Kunden (nicht verhandelbar)
+## 2. Regeln des Kunden
 
-- Keine Fakten über das Duo erfinden. Fehlende Daten = sichtbarer Platzhalter.
-- Kein Tracking, keine externen Requests. Einzige Ausnahme: GSAP + ScrollTrigger von jsDelivr mit SRI (steht in `datenschutz.html`).
+- Keine Fakten über das Duo erfinden. Fehlende Daten werden als sichtbarer Platzhalter gezeigt.
+- Kein Tracking, keine externen Requests. Einzige Ausnahme: GSAP + ScrollTrigger 3.13 von jsDelivr mit SRI (steht in `datenschutz.html`).
 - `noindex` bleibt auf allen Seiten, bis das Impressum echte Daten hat.
-- Niemals nach Passwörtern oder Tokens im Chat fragen. Keine Tokens oder privaten Daten ins Repo.
-- Der Kunde will nach Design-Arbeit **Screenshots sehen** (Desktop + Handy).
-- Antworten kurz und direkt („Caveman Mode“), auf Deutsch.
-- Higgsfield-Credits sind knapp (**250**). Vor jeder Generierung Preis nennen, nur nach Freigabe generieren.
+- Nie nach Passwörtern oder Tokens fragen. Keine Tokens, privaten Daten oder Referenzfotos ins Repo (das Repo ist öffentlich).
+- Antworten auf Deutsch, kurz und direkt („Caveman Mode“).
+- Nach Design-Arbeit **Screenshots zeigen** (Desktop + Handy).
+- Der Kunde will **professionell, „richtig 3D“, krass**. Die aktuelle 2D/SVG-Optik findet er nicht gut genug (Zitat: „Konzept perfekt, sieht aber scheiße aus“).
 
 ## 3. Aufbau
 
@@ -26,132 +29,101 @@ index.html              Hub: zwei Hälften Joe Laredo / PSGOTRICH, Socials, Mail
 joe-laredo/index.html   Scroll-Story „Ride Into Town“ + geparkter Rohinhalt in <template id="rohinhalt"> (nicht löschen)
 psgotrich/index.html    PS-Seite: Porträt + 3D-Chrom-Name (three.js, assets/js/names3d.js)
 impressum.html, datenschutz.html (Platzhalter in [ECKIGEN KLAMMERN]), 404.html
-assets/css/base.css     Tokens, Fonts, Buttons, Kassette, Nav, Footer
-assets/css/hub.css      nur Hub
-assets/css/story.css    nur Story
+assets/css/             base.css (Tokens, Fonts, Buttons, Kassette), hub.css, story.css
 assets/js/story/        story.js (Steuerung) + landscape.js, dust.js, scene1-sunrise.js, scene2.js … scene5.js
 assets/img/land/        gemalte Mesa-Ebenen (scripts/landschaft.py) + grain.png
-content/*.json          Termine, Follower, Musik (Pages CMS, .pages.yml)
+assets/gen/joe/         (kommt) KI-Material aus Higgsfield, siehe Abschnitt 6
+content/*.json          Termine, Follower, Musik – im Pages CMS editierbar (.pages.yml)
 scripts/                freistellen.py (rembg birefnet-portrait), landschaft.py, mesa-formen.svg, update-followers.mjs
-vendor/three/           three.js 0.170 (lokal)
+tools/story-shots.js    Screenshots der Story für die Abnahme
+vendor/three/           three.js 0.170 (lokal) + Basement-Grotesque-Typeface
 fonts/                  Basement Grotesque (Headlines), Figtree (Text)
 ```
 
-**CSP:** Jede Seite hat eine CSP per Meta-Tag. Inline-Script nur per sha256-Hash (`document.documentElement.classList.add('js')`). `/joe-laredo/` erlaubt zusätzlich `https://cdn.jsdelivr.net`.
+**CSP:** Jede Seite hat eine CSP als Meta-Tag. Inline-Script ist nur per sha256-Hash erlaubt (`document.documentElement.classList.add('js')` → `sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=`). `/joe-laredo/` erlaubt zusätzlich `https://cdn.jsdelivr.net`. Wenn eine neue Quelle dazukommt, die CSP anpassen.
+
+**GSAP-SRI:**
+
+| Datei | Prüfsumme |
+|---|---|
+| `gsap.min.js` | `sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc` |
+| `ScrollTrigger.min.js` | `sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh` |
 
 **Palette:** Asphalt `#141210` · Bone `#E8DFCC` · Camel Gold `#E6A92B` · Oxblood `#7C241D` · Dusk Blue `#33465F` · Faded Khaki `#9A8863`.
 
 ## 4. Scroll-Story Joe („Ride Into Town“), aktueller Stand
 
-Eine gepinnte Sektion, Scroll = Zeit, 5 Szenen à 1 Timeline-Einheit. Szenen-Vertrag: `export default { name, build(tl, t0, ctx), destroy() }`, `ctx = { root, stage, small, view }`.
+Eine gepinnte Sektion, Scroll = Zeit, 5 Szenen mit je 1 Einheit auf der Master-Timeline.
 
-**Tempolimit:** In `story.js` folgt die Timeline dem Scroll weich mit maximal `MAX_SPEED = 0.38` Szenen/Sekunde (kein ScrollTrigger-scrub mehr).
+- **Szenen-Vertrag:** `export default { name, build(tl, t0, ctx), destroy() }` mit `ctx = { root, stage, small (<700px), view }`.
+- **`view`:** sichtbarer Ausschnitt der SVG (viewBox 1600×900, `xMidYMax slice`). Am Handy ist nur die Mitte sichtbar.
+- **Tempolimit:** Die Timeline ist pausiert. `story.js` führt sie per `gsap.ticker` weich dem Scroll nach, mit höchstens `MAX_SPEED = 0.38` Szenen pro Sekunde.
 
-| Szene | Inhalt |
-|---|---|
-| 1 Sunrise | Sonne geht auf, Name „Joe Laredo“ zerfällt zu Staub |
-| 2 The Ride | Western-Silhouette mit Gelenk-Gangzyklus läuft ein, Parallax, Staub, Bio-Satz, Tumbleweed |
-| 3 High Noon | Sandstein-Licht, Foto von Joe (Platzhalter), Steckbrief „Wanted“ (Platzhalter, Kunde liefert echten Mugshot) |
-| 4 Sundown | Oxblood → Dusk Blue, Silhouette auf Felskante, MUSIC + Player (`content/musik.json`) |
-| 5 Campfire | Nacht, Sterne, Lagerfeuer, Booking-Button, Socials, „Zurück zum Start“ |
+| Szene | Inhalt | Platzhalter |
+|---|---|---|
+| 1 Sunrise | Sonne geht auf, „Joe Laredo“ zerfällt zu Staub | – |
+| 2 The Ride | Western-Silhouette mit Gelenk-Gangzyklus, Parallax, Staub, Bio-Satz, Tumbleweed | Figur (wird KI-Lauf-Video) |
+| 3 High Noon | Sandstein-Licht, Foto von Joe, Steckbrief „Wanted“ | Foto + Steckbrief (Kunde liefert echten Mugshot und Inhalte) |
+| 4 Sundown | Oxblood → Dusk Blue, Silhouette auf Felskante, MUSIC + Player (`content/musik.json`) | Silhouette |
+| 5 Campfire | Nacht, Sterne, Lagerfeuer, Booking-Button, Socials, „Zurück zum Start“ | Feuer wirkt comichaft |
 
-**Feedback des Kunden zum Stand:** „Konzept perfekt, sieht aber scheiße aus.“ Es soll **richtig 3D, professionell, krass** aussehen. Die SVG/2D-Technik ist am Limit, deshalb kommt der Umbau unten.
+## 5. Nächstes Ziel: 3D-Umbau der Joe-Story
 
-## 5. Nächstes Ziel: 3D-Umbau mit KI-Bildmaterial
+Das Konzept bleibt, die Technik wird gewechselt:
 
-**Technik:** three.js (liegt in `vendor/three/`).
-- Hintergrund-Plates aus Higgsfield + selbst erzeugte Tiefenkarten (Depth Anything, lokal) → 2.5D-Kamerafahrt.
-- Tageszeiten per Überblendung deckungsgleicher Plates.
-- Bloom, Staub- und Feuerpartikel.
-- Joe als freigestellte Figuren und als Frame-Sequenz aus einem Lauf-Video, abgespielt per Scroll.
-- Qualitätsstufen für schwache Handys.
-- Das Tempolimit bleibt.
+1. **three.js-Bühne** statt SVG, in einem Canvas hinter den HTML-Texten. Die Scroll-Steuerung (`story.js`, Tempolimit) bleibt und treibt Kamera und Uniforms.
+2. **2.5D-Hintergrund:** Landschafts-Plate + Tiefenkarte (Depth Anything V2, lokal per Python erzeugen) als verschobene Plane bzw. Parallax-Shader. So fährt die Kamera echt räumlich.
+3. **Tageszeiten:** vier deckungsgleiche Plates (Morgengrauen, Mittag, Sonnenuntergang, Nacht) per Shader überblenden.
+4. **Figuren:** freigestellte PNGs als Billboards. Szene 2 nutzt eine Frame-Sequenz aus dem Lauf-Video (ffmpeg → rembg → WebP-Sequenz), abgespielt per Scroll.
+5. **Effekte:** Bloom (Sonne, Feuer), Staub- und Funkenpartikel, Partikel-Feuer mit flackerndem Licht, Filmkorn, Vignette.
+6. **Qualitätsstufen:** schwache Handys bekommen weniger Partikel und kein Bloom. Mit `prefers-reduced-motion` gibt es statische Bilder.
+7. **Reihenfolge:** Erst der Prototyp für Szene 1–2 mit Screenshots zur Freigabe, dann Szene 3–5, dann PS.
 
-**Reihenfolge:** Erst Prototyp Joe Szene 1–2 mit Screenshots zur Freigabe, dann Szene 3–5, dann PS.
+**Was jetzt schon ohne KI-Material geht:** Bühne, Shader, Tiefenkarten-Pipeline, Frame-Sequenz-Player und Effekte mit Platzhalter-Bildern bauen. Als Platzhalter dienen die vorhandenen Ebenen in `assets/img/land/` und `fotos/`. Sobald `assets/gen/joe/` gefüllt ist, nur noch die Dateien tauschen.
 
-### 5.1 Joe – freigegebener Look (für alle Higgsfield-Prompts)
+## 6. KI-Material (Higgsfield)
 
-**Gesicht** (nach echten Fotos):
-- ovales Gesicht mit kantiger Kinnlinie, ca. 21 Jahre
-- volle Lippen, betonte Unterlippe
-- gerade, mittelbreite Nase mit runder Spitze
-- grau-grüne, leicht verhangene Augen
-- gerade hellbraune Augenbrauen, oft leicht gerunzelte Stirn
-- leichter, lückiger Bart an Kinn und Oberlippe
-- helle Haut mit natürlicher Textur
+Die Generierung läuft **getrennt in einer lokalen Claude-Code-Sitzung auf dem Mac des Kunden**. Nur dort sind Higgsfield-CLI, Login und Referenzfotos verfügbar. Cloud-Sitzungen erreichen Higgsfield nicht, deshalb hier **nichts generieren**. Der Auftrag dafür liegt beim Kunden als eigenes Dokument („Higgsfield-Auftrag Joe“).
 
-**Haare:** mittelbraun, nass zurückgegelt, hinten bis Kragenlänge.
+**Lieferung ins Repo** unter `assets/gen/joe/` mit `README.md` (Job-IDs, Modelle, Credits):
 
-**Körper:** schlank-athletisch, nicht bullig.
+| Datei | Inhalt | Verwendung |
+|---|---|---|
+| `j0-sheet.png` | Look-Sheet Joe (vorne, hinten, Gesicht, Profil) | nur Referenz |
+| `l1-dawn.webp` | Canyon 21:9 Morgengrauen: Mesas hinten, Felskante rechts, Sandfläche Mitte/links | Szene 1–2 |
+| `l2-noon.webp` | dieselbe Szene, Mittag | Szene 3 |
+| `l3-sunset.webp` | dieselbe Szene, Sonnenuntergang | Szene 4 |
+| `l4-night.webp` | dieselbe Szene, Sternennacht | Szene 5 |
+| `j1-walk.png` | Joe seitlich im Schritt, grauer Hintergrund | Startbild / Fallback Szene 2 |
+| `j2-walk.mp4` | 5 s Lauf-Video, Kamera fährt mit, grauer Hintergrund | Frame-Sequenz Szene 2 |
+| `j3-ledge.png` | Joe von hinten, Gegenlicht, dunkler Hintergrund | Szene 4 auf der Felskante |
+| `j4-campfire.png` | Joe sitzend auf Baumstamm, Licht von unten, schwarzer Hintergrund | Szene 5 am Feuer |
 
-**Outfit** (vom Kunden festgelegt):
-- **Oxblood-rote**, gebrauchte Lederjacke mit Hemdkragen und Reißverschluss, bis zur Brustmitte zu
-- weißes **Slim-Fit-T-Shirt mit engem Rundhals** (kein Tanktop)
-- **kleines silbernes Kreuz** an einer Kugelkette über dem Shirt
-- hell gewaschene **Levi's 501**
-- braunes Ledergürtel mit Western-Messingschnalle
-- hellbraune **Timberland-Style** Wildleder-Boots
-- Hände in den Taschen oder in braunen Leder-Arbeitshandschuhen
-- Pilotenbrille (Gold, Verlaufsglas) **nur in Szene 2**
-- **kein Cowboyhut**
+**Status:** noch nicht geliefert. Higgsfield-Guthaben bei Übergabe: 250 Credits.
 
-**Wichtig:** Joe hat Tattoos an Brust, Schulter, Armen und auf der Hand. Kleidung und Prompt müssen sie verdecken: hoher Ausschnitt, Ärmel bis übers Handgelenk, Hände verdeckt. Im Prompt immer Marken beschreiben statt nennen, sonst entstehen Logo- und Textfehler.
+**Joes Look:** Oxblood-Lederjacke, weißes T-Shirt, kleines Kreuz an Kugelkette, hell gewaschene 501, Western-Gürtel, hellbraune Boots, Handschuhe oder Hände in den Taschen. Pilotenbrille nur in Szene 2.
 
-**Referenzbilder:** Liegen beim Kunden (Desktop-Ordner `ref` + `zusatz`), **nicht im Repo**. Verwenden: echte Fotos (College-Jacke frontal, Cap-Selfie, Spiegel-Selfie nasse Haare, Selfie mit Pilotenbrille) + KI-Sheet ohne Shirt (Körper). Nicht verwenden: KI-Sheet mit offener Jacke (zu massig, zeigt Tattoo). Notiz des Kunden zu den KI-Sheets: Gesicht 70–80 % richtig, Rest 90 %.
+## 7. PSGOTRICH: Konzept „After Hours“ (nach Joe)
 
-### 5.2 Higgsfield-Plan Joe (Preise live geprüft)
+Gegenstück zu Joe: Joe endet nachts am Feuer, PS endet im Morgengrauen über der Stadt. Stimmung: kalt, Chrom, Blitzlicht, Dusk Blue, Iced Silver.
 
-Nano Banana Pro: 2 Credits (2K) / 4 Credits (4K). Seedance 2.0, 5 s, 720p, ohne Ton: 22,5 Credits.
-
-| # | Asset | Modell | max. Versuche | Credits max. |
-|---|---|---|---|---|
-| J0 | Look-Sheet 2×2 (vorne, hinten, Gesicht, Profil), grauer Hintergrund → **Freigabe Kunde** | Nano Banana Pro 2K 1:1 | 3 | 6 |
-| L1 | Canyon-Panorama 21:9, Morgengrauen (Tal, Mesas, Felskante rechts, Sandfläche Mitte) → **Freigabe** | Nano Banana Pro 4K | 2 | 8 |
-| L2–L4 | dasselbe Bild als Mittag / Sonnenuntergang / Sternennacht (Edit mit L1 als Referenz, deckungsgleich) | Nano Banana Pro 4K | 3 + 3 Reserve | 24 |
-| J1 | Ganzkörper seitlich im Schritt, Handschuhe, Pilotenbrille, grauer Hintergrund | Nano Banana Pro 2K | 2 | 4 |
-| J2 | Lauf-Video, Kamera fährt seitlich mit, Figur bleibt mittig → **Freigabe** | Seedance 2.0 720p 5 s | 2 | 45 |
-| J3 | Felskante: von hinten-seitlich, Hände in Taschen, oranges Gegenlicht | Nano Banana Pro 2K | 2 | 4 |
-| J4 | Lagerfeuer: sitzt auf Baumstamm, Handschuhe, warmes Licht von unten | Nano Banana Pro 2K | 2 | 4 |
-| — | Mugshot Szene 3 | macht der Kunde selbst | — | 0 |
-| | **Joe gesamt (Obergrenze)** | | | **95** |
-
-Rest ca. 155 Credits für PS. Alle Figuren vor einfarbigem Hintergrund, dann mit `scripts/freistellen.py` freistellen.
-
-**Prompt J0 (wörtlich):**
-```
-Photorealistic 2x2 character reference sheet of the same young man (age 21), seamless mid-grey studio backdrop, soft even key light, 85mm lens.
-Panels: top-left full body front view, top-right full body back view, bottom-left head-and-shoulders front, bottom-right head profile facing left.
-Face exactly as reference photos: oval face with defined jawline, full lips with pronounced lower lip, straight medium nose with soft rounded tip, grey-green slightly hooded eyes, straight light-brown eyebrows, slight frown, light patchy stubble on chin and upper lip, fair skin with natural texture and slight blemishes.
-Hair: medium brown, wet-look slicked straight back with gel, collar length at the nape, a few loose strands at the sides.
-Build: slim athletic, not bulky.
-Outfit: dark oxblood-red distressed leather jacket with shirt collar and zipper, zipped to mid-chest; white slim-fit t-shirt with a high tight crew neckline; small silver cross pendant on a silver ball chain over the t-shirt; light stone-wash classic straight-leg 501-style jeans, slightly loose, stacked over the boots; brown leather belt with brass western buckle; wheat-tan nubuck 6-inch lace-up work boots; hands in jacket pockets.
-No visible tattoos, no tank top, no open chest, no rolled sleeves, no bare forearms, no visible hands, no cowboy hat, no full beard, no logos, no text.
-```
-
-**Status:** Noch **nichts generiert**, 250 Credits vorhanden. Higgsfield-CLI ist auf dem Mac des Kunden eingerichtet (Workspace „Private“). In Cloud-Sitzungen müssen `higgsfield.ai`, `*.higgsfield.ai` und `*.cloudfront.net` in den Netzwerk-Freigaben stehen. Der Claude-Connector „Higgsfield AI“ kann nur lesen, nicht generieren.
-
-### 5.3 PS-Konzept „After Hours“ (nach Joe)
-
-Gegenstück zu Joe: Joe endet nachts am Feuer, PS endet im Morgengrauen über der Stadt. Stimmung kalt, Chrom, Blitzlicht, Dusk Blue, Iced Silver.
-
-1. **Cold Open:** Blitz, 3D-Chrom-Name PSGOTRICH taucht auf
+1. **Cold Open:** Blitz, 3D-Chrom-Name PSGOTRICH taucht auf (`names3d.js` wiederverwenden)
 2. **Night Drive:** nasse Straße, Laternen, Regen, Bio-Satz
 3. **Flash:** Paparazzi-Blitze, Backstage-Pass am Lanyard mit Facts (Gegenstück zum Steckbrief)
 4. **Ice:** vereiste Chrom-Kassette/Vinyl, Player + Links
 5. **Rooftop:** Bremen bei Nacht → Morgengrauen, Booking in Iced Silver, Socials, Zurück zum Start
 
-Für PS werden eigene Referenzfotos und ein eigener Look-Plan gebraucht (gleiches Vorgehen wie Joe, Tattoos ebenfalls verdecken).
-
-## 6. Offen beim Kunden
+## 8. Offen beim Kunden
 
 - **Impressum-Daten.** Danach `noindex` entfernen (Hub, Joe, PS).
-- **Mugshot** für Szene 3 (macht der Kunde selbst), Inhalte für den Steckbrief.
-- **J0-Freigabe**, danach der Rest des Higgsfield-Plans.
+- **Mugshot und Steckbrief-Inhalte** für Szene 3.
+- Higgsfield-Material Joe (läuft lokal), danach PS.
 - Optional: Streaming-Links und Follower-Zahlen über Pages CMS.
 
-## 7. Arbeitsweise / Testen
+## 9. Arbeitsweise und Testen
 
-- **Lokal:** `python3 -m http.server 8765` im Repo. Achtung: Der Higgsfield-CLI-Login nutzt ebenfalls Port 8765, dann einen anderen Port nehmen.
-- **Story-Tests mit Playwright:** jsDelivr ist in der Cloud blockiert. GSAP lokal per `page.route('https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/*', …)` aus dem npm-Paket `gsap@3.13.0` ausliefern (gleiche SRI-Prüfsumme). Wegen des Tempolimits nach dem Scrollen 4–6 s warten, bevor der Screenshot kommt.
-- **Freistellen:** `pip install "rembg[cpu]" pillow` → `python3 scripts/freistellen.py <bild>` (Modell birefnet-portrait).
-- **Commits:** Deutsch, beschreibend. Push direkt auf `main`.
+- **Lokal:** `python3 -m http.server 8000` im Repo.
+- **Screenshots:** `npm i --no-save playwright gsap@3.13.0`, dann `node tools/story-shots.js out 0,1.5,2.6,3.6,4.8` (in der Cloud ist Playwright global installiert: `NODE_PATH=$(npm root -g) node tools/story-shots.js …`, dann reicht `npm i --no-save gsap@3.13.0`). Das ergibt Desktop + iPhone und gibt JS-Fehler aus. jsDelivr ist in der Cloud gesperrt, deshalb liefert das Tool GSAP aus `node_modules` aus. In Cloud-Sitzungen ist Chromium vorinstalliert, also kein `playwright install` ausführen.
+- **Freistellen:** `pip install "rembg[cpu]" pillow` → `python3 scripts/freistellen.py <bild>`.
+- **Landschaft neu malen:** `python3 scripts/landschaft.py` (Formen in `scripts/mesa-formen.svg`).
+- **Commits:** auf Deutsch und beschreibend, direkt auf `main`.

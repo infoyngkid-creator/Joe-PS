@@ -53,7 +53,7 @@ Ist die Liste leer, wird der Abschnitt „Termine“ nicht angezeigt.
 
 Der Plan für ein sicheres Backend (Inhalte selbst pflegen, Termine) steht in `docs/backend-plan.md`.
 
-**Projekt-Übergabe (Stand, Regeln, 3D-Umbau, Higgsfield-Plan):** `docs/uebergabe.md`
+**Projekt-Übergabe (Stand, Regeln, nächste Schritte, KI-Material):** `docs/uebergabe.md` · Kurzkontext für Claude: `CLAUDE.md` · Story-Screenshots: `tools/story-shots.js`
 
 ## Ersten YouTube-Vlog einbinden
 
