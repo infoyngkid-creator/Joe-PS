@@ -67,7 +67,13 @@ Eine gepinnte Sektion, Scroll = Zeit, 5 Szenen mit je 1 Einheit auf der Master-T
 | 4 Sundown | Oxblood → Dusk Blue, Silhouette auf Felskante, MUSIC + Player (`content/musik.json`) | Silhouette |
 | 5 Campfire | Nacht, Sterne, Lagerfeuer, Booking-Button, Socials, „Zurück zum Start“ | Feuer wirkt comichaft |
 
-## 5. Nächstes Ziel: 3D-Umbau der Joe-Story
+## 5. 3D-Umbau der Joe-Story
+
+**Stand 13.10.2026: live.** `assets/js/story/stage3d.js` (three.js) rendert die Landschaft hinter den HTML-Texten, alles aus der Story-Zeit t (0–5) berechnet. Ohne WebGL bleibt die SVG-Version (Klasse `is-3d` fehlt dann).
+Daten: `assets/img/plates/` (`scripts/plates.py`: Plates 2k/3k + Tiefenkarte), `assets/img/joe/` (`scripts/lauf-frames.py`: Lauf-Atlas aus j2-walk.mp4, `scripts/joe-billboards.py`: ledge/campfire).
+Offen: Szene 3 zeigt noch das alte Foto (Mugshot fehlt), Feinschliff an Kamera/Licht, alte SVG-Teile aufräumen, dann PS.
+
+Ursprünglicher Plan:
 
 Das Konzept bleibt, die Technik wird gewechselt:
 
@@ -99,7 +105,7 @@ Die Generierung läuft **getrennt in einer lokalen Claude-Code-Sitzung auf dem M
 | `j3-ledge.png` | Joe von hinten, Gegenlicht, dunkler Hintergrund | Szene 4 auf der Felskante |
 | `j4-campfire.png` | Joe sitzend auf Baumstamm, Licht von unten, schwarzer Hintergrund | Szene 5 am Feuer |
 
-**Status:** noch nicht geliefert. Higgsfield-Guthaben bei Übergabe: 250 Credits.
+**Status:** geliefert und eingebaut (13.10.2026). Job-IDs/Credits fehlen noch in `assets/gen/joe/README.md`.
 
 **Joes Look:** Oxblood-Lederjacke, weißes T-Shirt, kleines Kreuz an Kugelkette, hell gewaschene 501, Western-Gürtel, hellbraune Boots, Handschuhe oder Hände in den Taschen. Pilotenbrille nur in Szene 2.
 
